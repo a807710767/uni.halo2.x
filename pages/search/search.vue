@@ -6,15 +6,17 @@
 
 <script>
 	export default {
-		name:"MyView",
 		data() {
 			return {
 				
-			};
+			}
+		},
+		methods: {
+			
 		}
 	}
 </script>
 
-<style lang="scss">
+<style>
 
 </style>
