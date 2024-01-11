@@ -109,7 +109,8 @@
 				total: 0,
 				articleList: [],
 				articleHeight: 300,
-				scrollId: ''
+				scrollId: '',
+				$halo: {}
 			};
 		},
 		mounted() {
@@ -120,7 +121,7 @@
 				this.page = 1
 				this.$refs.LoadingView.open()
 				const sys = await this.$u.sys()
-				console.log('sys', sys, this)
+				console.log('sys', sys, this.$halo)
 				this.articleHeight = sys.windowHeight - 50 - 44
 				await this.getSwiperList()
 				await this.getCategory()
