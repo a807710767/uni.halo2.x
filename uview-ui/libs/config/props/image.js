@@ -18,7 +18,7 @@ export default {
         radius: 0,
         lazyLoad: true,
         showMenuByLongpress: true,
-        loadingIcon: 'photo',
+        loadingIcon: 'twitter',
         errorIcon: 'error-circle',
         showLoading: true,
         showError: true,

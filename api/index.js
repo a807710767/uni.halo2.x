@@ -85,4 +85,18 @@ export default {
 			params
 		});
 	},
+	tagsByName(params) {
+		return fetch({
+			url: `/apis/api.content.halo.run/v1alpha1/tags/${params.name}`,
+			method: 'get',
+			params
+		});
+	},
+	tagsPosts(params) {
+		return fetch({
+			url: `/apis/api.content.halo.run/v1alpha1/tags/${params.name}/posts`,
+			method: 'get',
+			params
+		});
+	},
 }
