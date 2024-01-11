@@ -1,8 +1,10 @@
 <template>
-	<scroll-view class="index-view" scroll-y :refresher-triggered="triggered" @refresherrefresh="handleRefresh"
-		refresher-enabled :refresher-threshold="50">
+	<view class="links-view">
+		<scroll-view class="links-view" scroll-y :refresher-triggered="triggered" @refresherrefresh="handleRefresh"
+			refresher-enabled :refresher-threshold="50" v-if="index === 'links'">
 
-	</scroll-view>
+		</scroll-view>
+	</view>
 </template>
 
 <script>
@@ -32,6 +34,7 @@
 				console.log('onshow');
 			},
 			handleRefresh() {
+				this.page = 1
 				this.triggered = true
 				this.init()
 			},
@@ -45,5 +48,8 @@
 </script>
 
 <style lang="scss" scoped>
-	.links-view {}
+	.links-view {
+		height: 100%;
+		width: 100%;
+	}
 </style>

@@ -1,21 +1,22 @@
 <template>
-	<scroll-view class="index-view" scroll-y :refresher-triggered="triggered" @refresherrefresh="handleRefresh"
-		refresher-enabled :refresher-threshold="50" :scroll-into-view="scrollId">
-		<view class="" v-if="index === 'index'">
+	<view class="index-view">
+		<scroll-view class="index-view p10" scroll-y :refresher-triggered="triggered" @refresherrefresh="handleRefresh"
+			refresher-enabled :refresher-threshold="50" enable-flex :scroll-into-view="scrollId"
+			v-if="index === 'index'">
 			<view class="x ali-cen">
-				<u--image :src="halo.info.logo" width="50rpx" height="50rpx" shape="circle"></u--image>
+				<u--image :src="$halo.info.logo" width="50rpx" height="50rpx" shape="circle"></u--image>
 				<view class="title">
-					{{ halo.info.title }}
+					{{ $halo.info.title }}
 				</view>
 				<view class="">
 					-
 				</view>
-				<view class="sub-title" v-if="halo.info.subTitle">
-					{{ halo.info.subTitle }}
+				<view class="sub-title" v-if="$halo.info.subTitle">
+					{{ $halo.info.subTitle }}
 				</view>
 			</view>
 			<view class="x">
-
+				搜索
 			</view>
 			<!-- 轮播图 -->
 			<block v-if="swiperList && swiperList.length">
@@ -43,22 +44,30 @@
 			<block v-if="tags && tags.length">
 				<u-tabs :current="tagIndex" id="tages" :list="tags" keyName="displayName" :activeStyle="activeStyle"
 					lineHeight="10" :inactiveStyle="inactiveStyle" @click="handleTags"></u-tabs>
-				<swiper :current="tagIndex" @change="handleSwiper" :style="`height:calc( ${articleHeight}px - 20rpx);width: 100%;`">
+				<swiper :current="tagIndex" @change="handleSwiper"
+					:style="'min-height:calc( '+ articleHeight +'px - 20rpx);width: 100%;'">
 					<swiper-item v-for="(item,index) in tags" :key="index" class="list-swiper-item" style="">
-						<scroll-view scroll-y v-if="index === tagIndex" style="width: 100%;height: 100%;">
-							<ArticleItem v-for="(article,articleIndex) in articleList" :data="article"
-								:key="articleIndex">
-							</ArticleItem>
-						</scroll-view>
+						<view class="y" v-if="index === tagIndex" style="width: 100%;">
+							<block v-if="articleList && articleList.length">
+								<ArticleItem v-for="(article,articleIndex) in articleList" :data="article"
+									:key="articleIndex">
+								</ArticleItem>
+							</block>
+							<block v-else>
+								<u-empty mode="data" iconSize="250" textSize="40" style="height: 80%;">
+								</u-empty>
+							</block>
+						</view>
 						<view v-else>
-							kong空
+							<u-loading-page :image="$halo.info.logo" iconSize="300" fontSize="40" loadingText="切换看数据"
+								loading></u-loading-page>
 						</view>
 					</swiper-item>
 				</swiper>
 			</block>
-		</view>
-		<LoadingView ref="LoadingView"></LoadingView>
-	</scroll-view>
+			<LoadingView ref="LoadingView"></LoadingView>
+		</scroll-view>
+	</view>
 </template>
 
 <script>
@@ -111,6 +120,7 @@
 				this.page = 1
 				this.$refs.LoadingView.open()
 				const sys = await this.$u.sys()
+				console.log('sys', sys, this)
 				this.articleHeight = sys.windowHeight - 50 - 44
 				await this.getSwiperList()
 				await this.getCategory()
@@ -123,11 +133,13 @@
 				console.log('onshow');
 			},
 			handleRefresh() {
+				this.page = 1
 				this.triggered = true
 				this.init()
 			},
 			async getPostsList(name) {
 				let res = {}
+				this.$refs.LoadingView.open()
 				if (this.page !== 1 && this.list >= this.total) {
 					return
 				}
@@ -148,8 +160,11 @@
 					const list = res.items.map(item => {
 						return {
 							name: item.metadata.name,
+							displayName: item.owner.displayName,
+							...item.spec,
 							...item.stats,
-							...item.spec
+							...item.status
+
 						}
 					})
 					if (this.page === 1) {
@@ -157,9 +172,12 @@
 					} else {
 						this.articleList.push(...list)
 					}
+				} else {
+					this.articleList = []
 				}
-				console.log(this.articleList[0])
+				console.log(this.articleList)
 				this.scrollId = ''
+				this.$refs.LoadingView.close()
 				return res
 			},
 			handleTags(item) {
@@ -177,6 +195,7 @@
 				return api.tags().then(res => {
 					console.log(res);
 					const list = res.items.map((item, index) => {
+						this.$halo.tagsMap[item.metadata.name] = item.spec.displayName
 						return {
 							name: item.metadata.name,
 							index: index + 1,
@@ -194,6 +213,7 @@
 			getCategory() {
 				return api.categories().then(res => {
 					this.categories = res.items.map(item => {
+						this.$halo.categoriesMap[item.metadata.name] = item.spec.displayName
 						return {
 							metadata: item.metadata.name,
 							name: item.spec.displayName,
@@ -243,7 +263,7 @@
 	.index-view {
 		width: 100%;
 		height: 100%;
-		padding: 10rpx;
+		overflow-y: auto;
 
 		.title {
 			font-size: 40rpx;
@@ -270,7 +290,9 @@
 		}
 
 		.list-swiper-item {
-			height: 100%;
+			// height: 100%;
+			// height: auto;
+			overflow-y: auto;
 		}
 	}
 </style>

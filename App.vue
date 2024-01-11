@@ -1,5 +1,4 @@
 <script>
-	import api from '@/api/login.js'
 	import storage from '@/lib/storage.js'
 	export default {
 

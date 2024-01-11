@@ -123,7 +123,7 @@
 			},
 			// 图标大小
 			iconSize() {
-				const size = this.size === 'large' ? 21 : this.size === 'medium' ? 19 : 16
+				const size = this.size === 'large' ? 34 : this.size === 'medium' ? 30 : 26
 				return size
 			},
 			// 图标颜色
