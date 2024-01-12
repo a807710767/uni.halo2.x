@@ -6,12 +6,7 @@
 			<LinksView v-show="index === 'links'" index="links" ref="links"></LinksView>
 			<MyView v-show="index === 'my'" index="my" ref="my"></MyView>
 		</view>
-		<u-tabbar :value="index" @change="changeTab">
-			<u-tabbar-item text="首页" name="index" icon="home-fill" @click="click"></u-tabbar-item>
-			<u-tabbar-item text="动态" name="moments" icon="moments" @click="click"></u-tabbar-item>
-			<u-tabbar-item text="友链" name="links" icon="share-fill" @click="click"></u-tabbar-item>
-			<u-tabbar-item text="我的" name="my" icon="account-fill" @click="click"></u-tabbar-item>
-		</u-tabbar>
+		<u-tabbar :value="index" @change="changeTab"></u-tabbar>
 	</view>
 </template>
 
@@ -38,7 +33,8 @@
 			},
 			click(e) {
 				this.index = e;
-				console.log(e);
+				console.log(this.$refs[e]);
+				this.$refs[e].handleShow()
 			}
 		}
 	};

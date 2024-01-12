@@ -1,52 +1,96 @@
 <template>
 	<view class="index-view">
-		<scroll-view class="index-view p10" scroll-y :refresher-triggered="triggered" @refresherrefresh="handleRefresh"
-			refresher-enabled :refresher-threshold="50" enable-flex :scroll-into-view="scrollId"
-			v-if="index === 'index'">
-			<view class="x ali-cen">
-				<u--image :src="$halo.info.logo" width="50rpx" height="50rpx" shape="circle"></u--image>
-				<view class="title">
-					{{ $halo.info.title }}
-				</view>
-				<view class="">
-					-
-				</view>
-				<view class="sub-title" v-if="$halo.info.subTitle">
-					{{ $halo.info.subTitle }}
-				</view>
-			</view>
-			<view class="x">
-				搜索
-			</view>
-			<!-- 轮播图 -->
-			<block v-if="swiperList && swiperList.length">
-				<u-swiper :list="swiperList" @click="clickSwiper" indicator circular indicatorStyle="bottom"
-					indicatorActiveColor="#1F76FF" height="300" radius="20"></u-swiper>
-			</block>
-			<!-- 分类 -->
-			<block v-if="categories && categories.length">
-				<view class="category x" v-if="categories.length <= 10">
-					<u--image v-for="(item, index) in categories" :key="index" :src="item.cover" width="128rpx"
-						height="128rpx" radius="12" class="m10"></u--image>
-				</view>
-				<view class="category y" v-else>
-					<view class="x">
-						<u--image v-for="(item, index) in categoriesTop" :key="index" :src="item.cover" width="128rpx"
-							height="128rpx" radius="12" class="m10"></u--image>
+		<u-navbar title="首页" fixed placeholder leftIcon=" " :bgColor="$halo.info.mianColor"
+			:titleStyle="{color:$halo.info.mianTextColor}">
+		</u-navbar>
+		<scroll-view :style="'height: calc(100% - 44px - '+ $u.sys().statusBarHeight+'px);'" scroll-y
+			:refresher-triggered="triggered" @refresherrefresh="handleRefresh" refresher-enabled
+			@scrolltolower="handleBottom" :refresher-threshold="50" enable-flex :scroll-into-view="scrollId"
+			scroll-with-animation v-if="index === 'index'">
+			<view class="body">
+				<view class="x ali-cen p10"
+					:style="'background-color: '+$halo.info.mianColor+';color: ' + $halo.info.mianTextColor">
+					<u-image :src="$halo.info.logo" width="50rpx" height="50rpx" shape="circle"></u-image>
+					<view class="title">
+						{{ $halo.info.title }}
 					</view>
-					<view class="x">
-						<u--image v-for="(item, index) in categoriesBottom" :key="index" :src="item.cover"
-							width="128rpx" height="128rpx" radius="12" class="m10"></u--image>
+					<view class="">
+						-
+					</view>
+					<view class="sub-title" v-if="$halo.info.subTitle">
+						{{ $halo.info.subTitle }}
 					</view>
 				</view>
-			</block>
-			<!-- tags -->
-			<block v-if="tags && tags.length">
-				<u-tabs :current="tagIndex" id="tages" :list="tags" keyName="displayName" :activeStyle="activeStyle"
-					lineHeight="10" :inactiveStyle="inactiveStyle" @click="handleTags"></u-tabs>
-				<swiper :current="tagIndex" @change="handleSwiper"
+				<view class="y m10 p10">
+					<u-search disabled @click="handleGoSearch" @clickIcon="handleGoSearch" :showAction="false"></u-search>
+					<view class="x">
+
+					</view>
+				</view>
+				<!-- 轮播图 -->
+				<view class="m10 p10" v-if="swiperList && swiperList.length">
+					<u-swiper :list="swiperList" @click="clickSwiper" indicator circular indicatorStyle="bottom"
+						indicatorActiveColor="#1F76FF" height="300rpx" radius="10"></u-swiper>
+				</view>
+				<!-- 分类 -->
+				<view class="m10 p10" v-if="categories && categories.length">
+					<view class="category x" v-if="categories.length <= 10">
+						<view class="y ali-cen m10" v-for="(item, index) in categories">
+							<image :key="index" :src="item.cover || $halo.info.logo" class="image">
+							</image>
+							<view class="text">
+								{{item.name}}
+							</view>
+						</view>
+
+					</view>
+					<view class="category y" v-else>
+						<view class="x">
+							<view class="y ali-cen m10" v-for="(item, index) in categoriesTop">
+								<image :key="index" :src="item.cover || $halo.info.logo" class="image">
+								</image>
+								<view class="text">
+									{{item.name}}
+								</view>
+							</view>
+						</view>
+						<view class="x">
+							<view class="y ali-cen m10" v-for="(item, index) in categoriesBottom">
+								<image :key="index" :src="item.cover || $halo.info.logo" class="image">
+								</image>
+								<view class="text">
+									{{item.name}}
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+				<!-- tags -->
+				<block v-if="tags && tags.length">
+					<view id="tags" class="tags">
+						<u-tabs :current="tagIndex" :list="tags" keyName="displayName" :activeStyle="activeStyle"
+							:inactiveStyle="inactiveStyle" @click="handleTags"></u-tabs>
+					</view>
+					<view class="p20"
+						:style="'min-height:calc( '+ articleHeight +'px - 20rpx);width: 100%;box-sizing:border-box'">
+						<block v-if="articleList && articleList.length">
+							<ArticleItem style="width: 100%" v-for="(article,articleIndex) in articleList"
+								:data="article" :key="articleIndex">
+							</ArticleItem>
+							<u-loadmore :status="articleList.length >= total ? 'nomore':'loading '"
+								nomoreText="我也是有底线的!!!" dashed line />
+						</block>
+						<view class="x ali-cen juc-cen"
+							:style="'min-height:calc( '+ articleHeight +'px - 20rpx);width: 100%;'" v-else>
+							<u-empty mode="data" icon="https://cdnpan.qiwo75.com/halo/nodata.png" iconSize="200"
+								textSize="30rpx">
+							</u-empty>
+						</view>
+					</view>
+					<!-- 高度问题没解决 -->
+					<!-- <swiper :current="tagIndex" @change="handleSwiper"
 					:style="'min-height:calc( '+ articleHeight +'px - 20rpx);width: 100%;'">
-					<swiper-item v-for="(item,index) in tags" :key="index" class="list-swiper-item" style="">
+					<swiper-item v-for="(item,index) in tags" :key="index" class="list-swiper-item" style="height: auto;">
 						<view class="y" v-if="index === tagIndex" style="width: 100%;">
 							<block v-if="articleList && articleList.length">
 								<ArticleItem v-for="(article,articleIndex) in articleList" :data="article"
@@ -54,19 +98,20 @@
 								</ArticleItem>
 							</block>
 							<block v-else>
-								<u-empty mode="data" iconSize="250" textSize="40" style="height: 80%;">
+								<u-empty mode="data" iconSize="200" textSize="30" marginTop="100">
 								</u-empty>
 							</block>
 						</view>
 						<view v-else>
-							<u-loading-page :image="$halo.info.logo" iconSize="300" fontSize="40" loadingText="切换看数据"
+							<u-loading-page :image="$halo.info.logo" iconSize="200" fontSize="30" loadingText="切换看数据"
 								loading></u-loading-page>
 						</view>
 					</swiper-item>
-				</swiper>
-			</block>
-			<LoadingView ref="LoadingView"></LoadingView>
+				</swiper> -->
+				</block>
+			</view>
 		</scroll-view>
+		<LoadingView ref="LoadingView"></LoadingView>
 	</view>
 </template>
 
@@ -110,7 +155,6 @@
 				articleList: [],
 				articleHeight: 300,
 				scrollId: '',
-				$halo: {}
 			};
 		},
 		mounted() {
@@ -118,11 +162,14 @@
 		},
 		methods: {
 			async init() {
+				uni.setNavigationBarTitle({
+					title: this.$halo.info.title + ' - ' + this.$halo.info.subTitle
+				})
 				this.page = 1
 				this.$refs.LoadingView.open()
 				const sys = await this.$u.sys()
-				console.log('sys', sys, this.$halo)
-				this.articleHeight = sys.windowHeight - 50 - 44
+				console.log('sys', sys, this)
+				this.articleHeight = sys.windowHeight - 50 - 90 - sys.statusBarHeight
 				await this.getSwiperList()
 				await this.getCategory()
 				await this.getTags()
@@ -130,7 +177,10 @@
 				this.triggered = false
 				this.$refs.LoadingView.close()
 			},
-			onShow() {
+			handleShow() {
+				uni.setNavigationBarTitle({
+					title: this.$halo.info.title + ' - ' + this.$halo.info.subTitle
+				})
 				console.log('onshow');
 			},
 			handleRefresh() {
@@ -138,12 +188,17 @@
 				this.triggered = true
 				this.init()
 			},
-			async getPostsList(name) {
-				let res = {}
-				this.$refs.LoadingView.open()
-				if (this.page !== 1 && this.list >= this.total) {
+			handleBottom() {
+				if (this.articleList.length >= this.total) {
 					return
 				}
+				this.page = this.page + 1
+				this.getPostsList()
+				console.log('触底');
+			},
+			async getPostsList() {
+				let res = {}
+				this.$refs.LoadingView.open()
 				if (this.tagIndex === 0) {
 					res = await api.pages({
 						page: this.page,
@@ -153,7 +208,7 @@
 					res = await api.tagsPosts({
 						page: this.page,
 						size: this.size,
-						name
+						name: this.tags[this.tagIndex].name
 					})
 				}
 				this.total = res.total
@@ -183,14 +238,17 @@
 			},
 			handleTags(item) {
 				this.tagIndex = item.index
+				this.page = 1
+				this.getPostsList()
+				this.scrollId = 'tags'
 			},
 			handleSwiper(e) {
 				const index = e.detail.current
 				const item = this.tags[index]
 				this.tagIndex = item.index
 				this.page = 1
-				this.getPostsList(item.name)
-				this.scrollId = 'tages'
+				this.getPostsList()
+				this.scrollId = 'tags'
 			},
 			getTags() {
 				return api.tags().then(res => {
@@ -260,11 +318,15 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.index-view {
-		width: 100%;
 		height: 100%;
-		overflow-y: auto;
+		width: 100%;
+	}
+
+	.body {
+		width: 100%;
+		box-sizing: border-box;
 
 		.title {
 			font-size: 40rpx;
@@ -281,19 +343,34 @@
 		.category {
 			flex-wrap: nowrap;
 			overflow-x: auto;
+
+			.image {
+				width: 120rpx;
+				height: 120rpx;
+				border-radius: 8px;
+				margin-bottom: 10rpx;
+				flex-shrink: 0;
+				border-bottom: 1px solid #ddd;
+			}
+
+			.text {
+				font-size: 28rpx;
+				color: #333;
+			}
 		}
 
-		#tages {
+		#tags,
+		.tags {
 			position: sticky;
 			top: 0;
-			z-index: 10;
+			z-index: 90;
 			background-color: #fff;
 		}
 
 		.list-swiper-item {
 			// height: 100%;
-			// height: auto;
-			overflow-y: auto;
+			height: auto;
+			// overflow-y: auto;
 		}
 	}
 </style>

@@ -76,6 +76,9 @@ $uni-font-size-paragraph: 30rpx;
 
 @import 'uview-ui/theme.scss';
 
+* {
+	box-sizing: border-box;
+}
 .x {
 	display: flex;
 	flex-direction: row;
@@ -89,6 +92,9 @@ $uni-font-size-paragraph: 30rpx;
 }
 .ali-cen {
 	align-items: center;
+}
+.juc-cen {
+	justify-content: center;
 }
 .juc-bet{
 	justify-content: space-between;
@@ -113,4 +119,7 @@ $uni-font-size-paragraph: 30rpx;
 }
 .p10{
 	padding: 10rpx;
+}
+.p20{
+	padding: 20rpx;
 }

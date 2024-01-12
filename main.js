@@ -5,7 +5,7 @@ Vue.use(uView);
 
 import config from '@/config/index.js'
 Vue.use(config);
-uni.$u.config.unit = 'rpx'
+
 Vue.prototype.$uView = {
 	size: 'mini'
 };

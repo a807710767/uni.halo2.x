@@ -1,16 +1,23 @@
 <template>
 	<view class="moments-view">
-		<scroll-view class="moments-view" scroll-y :refresher-triggered="triggered" @refresherrefresh="handleRefresh"
-			refresher-enabled :refresher-threshold="50" v-if="index === 'moments'">
+		<u-navbar title="朋友圈" fixed placeholder leftIcon=" " :bgColor="$halo.info.mianColor"
+			:titleStyle="{color:$halo.info.mianTextColor}">
+		</u-navbar>
+		<scroll-view class="body" :style="'height: calc(100% - 46px - '+ $u.sys().statusBarHeight+'px);'" scroll-y
+			:refresher-triggered="triggered" @refresherrefresh="handleRefresh" refresher-enabled
+			:refresher-threshold="50" v-if="index === 'moments'">
 			<view class="moments-item" v-for="(item,index) in list" :key="index">
 				<view class="content" v-html="item.content">
 				</view>
-				<u-album v-if="item.medium && item.medium.length" :urls="item.medium" keyName="url"
+		<!-- 		<u-album v-if="item.medium && item.medium.length" :urls="item.medium" keyName="url"
 					:multipleSize="item.medium.length === 4?'300':'198'" space="10"
-					:rowCount="item.medium.length === 4?'2':'3'"></u-album>
+					:rowCount="item.medium.length === 4?'2':'3'"></u-album> -->
 				<view class="time">
 					——{{item.createTime}}
 				</view>
+			</view>
+			<view style="height: 50rpx;">
+
 			</view>
 		</scroll-view>
 	</view>
@@ -47,7 +54,10 @@
 				await this.getData()
 				this.triggered = false
 			},
-			onShow() {
+			handleShow() {
+				uni.setNavigationBarTitle({
+					title: '朋友圈'
+				})
 				console.log('onshow');
 			},
 			async getData() {
@@ -89,6 +99,13 @@
 	.moments-view {
 		width: 100%;
 		height: 100%;
+
+		.body {
+			width: 100%;
+			height: calc(100% - 44px);
+			overflow-y: auto;
+			box-sizing: border-box;
+		}
 
 		.moments-item {
 			margin: 20rpx;

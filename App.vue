@@ -49,9 +49,6 @@
 <style lang="scss">
 	@import 'uview-ui/index.scss';
 
-	* {
-		box-sizing: border-box;
-	}
 
 	page {
 		width: 100%;
