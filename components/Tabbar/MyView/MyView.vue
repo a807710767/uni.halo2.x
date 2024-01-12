@@ -12,7 +12,7 @@
 </template>
 
 <script>
-	import LoadingView from '../Loading/Loading.vue'
+	import LoadingView from '@/components/Loading/Loading.vue'
 	export default {
 		name: "MyView",
 		props: {

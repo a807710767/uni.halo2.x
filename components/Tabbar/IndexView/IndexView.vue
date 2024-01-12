@@ -22,7 +22,8 @@
 					</view>
 				</view>
 				<view class="y m10 p10">
-					<u-search disabled @click="handleGoSearch" @clickIcon="handleGoSearch" :showAction="false"></u-search>
+					<u-search disabled @click="handleGoSearch" @clickIcon="handleGoSearch"
+						:showAction="false"></u-search>
 					<view class="x">
 
 					</view>
@@ -68,8 +69,7 @@
 				<!-- tags -->
 				<block v-if="tags && tags.length">
 					<view id="tags" class="tags">
-						<u-tabs :current="tagIndex" :list="tags" keyName="displayName" :activeStyle="activeStyle"
-							:inactiveStyle="inactiveStyle" @click="handleTags"></u-tabs>
+						<u-tabs :current="tagIndex" :list="tags" name="displayName" @change="handleTags"></u-tabs>
 					</view>
 					<view class="p20"
 						:style="'min-height:calc( '+ articleHeight +'px - 20rpx);width: 100%;box-sizing:border-box'">
@@ -82,7 +82,7 @@
 						</block>
 						<view class="x ali-cen juc-cen"
 							:style="'min-height:calc( '+ articleHeight +'px - 20rpx);width: 100%;'" v-else>
-							<u-empty mode="data" icon="https://cdnpan.qiwo75.com/halo/nodata.png" iconSize="200"
+							<u-empty mode="data" src="https://cdnpan.qiwo75.com/halo/nodata.png" iconSize="200"
 								textSize="30rpx">
 							</u-empty>
 						</view>
@@ -116,8 +116,8 @@
 </template>
 
 <script>
-	import LoadingView from '../Loading/Loading.vue'
-	import ArticleItem from '../ArticleItem/ArticleItem.vue'
+	import LoadingView from '@/components/Loading/Loading.vue'
+	import ArticleItem from '@/components/ArticleItem/ArticleItem.vue'
 	import api from '@/api/index.js'
 	export default {
 		name: "IndexView",
@@ -236,8 +236,8 @@
 				this.$refs.LoadingView.close()
 				return res
 			},
-			handleTags(item) {
-				this.tagIndex = item.index
+			handleTags(index) {
+				this.tagIndex = index
 				this.page = 1
 				this.getPostsList()
 				this.scrollId = 'tags'
@@ -299,7 +299,7 @@
 				}).then(res => {
 					const list = res.menuItems.map(item => {
 						return {
-							url: item.status.displayName,
+							image: item.status.displayName,
 							href: item.status.href
 						}
 					})
@@ -343,6 +343,10 @@
 		.category {
 			flex-wrap: nowrap;
 			overflow-x: auto;
+
+			&::-webkit-scrollbar {
+				display: none;
+			}
 
 			.image {
 				width: 120rpx;

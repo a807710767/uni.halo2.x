@@ -11,15 +11,14 @@
 				</view>
 				<view class="x mt10">
 					<u-tag v-for="item in data.categories" :text="$halo.categoriesMap[item]" plainFill :key="item" plain
-						size="mini"></u-tag>
+						size="mini" class="m10"></u-tag>
 					<u-tag v-for="item in data.tags" :text="$halo.tagsMap[item]" icon="tags-fill" plainFill :key="item"
-						plain size="mini" type="warning"></u-tag>
+						plain size="mini" type="warning" class="m10"></u-tag>
 				</view>
 				<view class="x juc-bet bottom mt10">
 					<view class="x">
 						<u-icon name="eye-fill" :label="data.visit"></u-icon>
 						<view class="mr10">
-
 						</view>
 						<u-icon name="account-fill" :label="data.displayName"></u-icon>
 					</view>

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-	import LoadingView from '../Loading/Loading.vue'
+	import LoadingView from '@/components/Loading/Loading.vue'
 	import api from '@/api/index.js'
 	export default {
 		name: "LinksView",
