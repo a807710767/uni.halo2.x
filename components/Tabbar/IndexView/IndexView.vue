@@ -1,7 +1,7 @@
 <template>
 	<view class="index-view">
-		<u-navbar title="首页" fixed placeholder leftIcon=" " :bgColor="$halo.info.mianColor"
-			:titleStyle="{color:$halo.info.mianTextColor}">
+		<u-navbar title="首页" placeholder :is-back="false" :background="{background:$halo.info.mianColor}"
+			:title-color="$halo.info.mianTextColor">
 		</u-navbar>
 		<scroll-view :style="'height: calc(100% - 44px - '+ $u.sys().statusBarHeight+'px);'" scroll-y
 			:refresher-triggered="triggered" @refresherrefresh="handleRefresh" refresher-enabled
@@ -21,20 +21,18 @@
 						{{ $halo.info.subTitle }}
 					</view>
 				</view>
-				<view class="y m10 p10">
-					<u-search disabled @click="handleGoSearch" @clickIcon="handleGoSearch"
-						:showAction="false"></u-search>
+				<view class="y m10 ">
+					<u-search disabled @click="handleGoSearch" class="p10"></u-search>
 					<view class="x">
 
 					</view>
 				</view>
 				<!-- 轮播图 -->
 				<view class="m10 p10" v-if="swiperList && swiperList.length">
-					<u-swiper :list="swiperList" @click="clickSwiper" indicator circular indicatorStyle="bottom"
-						indicatorActiveColor="#1F76FF" height="300rpx" radius="10"></u-swiper>
+					<u-swiper :list="swiperList" @click="clickSwiper" height="300rpx" radius="10"></u-swiper>
 				</view>
 				<!-- 分类 -->
-				<view class="m10 p10" v-if="categories && categories.length">
+				<view class="ml10 mr10 p10" v-if="categories && categories.length">
 					<view class="category x" v-if="categories.length <= 10">
 						<view class="y ali-cen m10" v-for="(item, index) in categories">
 							<image :key="index" :src="item.cover || $halo.info.logo" class="image">

@@ -19,6 +19,14 @@
         		"navigationBarTitleText" : "搜索",
         		"enablePullDownRefresh" : false
         	}
+        },
+        {
+        	"path" : "pages/webView/webView",
+        	"style" : 
+        	{
+        		"navigationStyle" : "default",
+        		"enablePullDownRefresh" : false
+        	}
         }
     ],
 	"globalStyle": {
