@@ -1,12 +1,14 @@
 <template>
 	<view class="index">
 		<view :style="'height: calc(100% - 51px - ' + $u.sys().safeAreaInsets.top +'px);'">
-			<IndexView v-show="index === 0" index="index" ref="index"></IndexView>
-			<MomentsView v-show="index === 1" index="moments" ref="moments"></MomentsView>
-			<LinksView v-show="index === 2" index="links" ref="links"></LinksView>
-			<MyView v-show="index === 3" index="my" ref="my"></MyView>
+			<IndexView v-if="index === 0" index="index" ref="index"></IndexView>
+			<MomentsView v-if="index === 1" index="moments" ref="moments"></MomentsView>
+			<LinksView v-if="index === 2" index="links" ref="links"></LinksView>
+			<MyView v-if="index === 3" index="my" ref="my"></MyView>
 		</view>
-		<u-tabbar v-model="index" :list="list" @change="changeTab" :active-color="$halo.info.mianColor"></u-tabbar>
+		<u-tabbar v-model="index" :list="list" @change="changeTab" :bg-color="$halo.info.mainColor"
+			:active-color="$halo.info.mainTextColor" :inactive-color="$halo.info.mainTextColor" :border-top="false">
+		</u-tabbar>
 	</view>
 </template>
 
@@ -18,7 +20,7 @@
 	export default {
 		data() {
 			return {
-				index: 2,
+				index: 3,
 				list: [{
 					iconPath: 'home',
 					selectedIconPath: "home",

@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<u-navbar title="搜索" fixed placeholder autoBack :bgColor="$halo.info.mianColor"
-			:titleStyle="{color:$halo.info.mianTextColor}" :leftIconColor="$halo.info.mianTextColor"></u-navbar>
+		<u-navbar title="搜索" fixed placeholder autoBack :bgColor="$halo.info.mainColor"
+			:titleStyle="{color:$halo.info.mainTextColor}" :leftIconColor="$halo.info.mainTextColor"></u-navbar>
 	</view>
 </template>
 

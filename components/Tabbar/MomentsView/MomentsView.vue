@@ -1,7 +1,7 @@
 <template>
 	<view class="moments-view">
-		<u-navbar title="朋友圈" fixed placeholder leftIcon=" " :bgColor="$halo.info.mianColor"
-			:titleStyle="{color:$halo.info.mianTextColor}">
+		<u-navbar title="朋友圈" placeholder :is-back="false" :background="{background:$halo.info.mainColor}"
+			:title-color="$halo.info.mainTextColor">
 		</u-navbar>
 		<scroll-view class="body" :style="'height: calc(100% - 46px - '+ $u.sys().statusBarHeight+'px);'" scroll-y
 			:refresher-triggered="triggered" @refresherrefresh="handleRefresh" refresher-enabled
@@ -9,7 +9,7 @@
 			<view class="moments-item" v-for="(item,index) in list" :key="index">
 				<view class="content" v-html="item.content">
 				</view>
-		<!-- 		<u-album v-if="item.medium && item.medium.length" :urls="item.medium" keyName="url"
+				<!-- 		<u-album v-if="item.medium && item.medium.length" :urls="item.medium" keyName="url"
 					:multipleSize="item.medium.length === 4?'300':'198'" space="10"
 					:rowCount="item.medium.length === 4?'2':'3'"></u-album> -->
 				<view class="time">

@@ -1,7 +1,7 @@
 <template>
 	<view class="index-view">
-		<u-navbar title="首页" placeholder :is-back="false" :background="{background:$halo.info.mianColor}"
-			:title-color="$halo.info.mianTextColor">
+		<u-navbar title="首页" placeholder :is-back="false" :background="{background:$halo.info.mainColor}"
+			:title-color="$halo.info.mainTextColor">
 		</u-navbar>
 		<scroll-view :style="'height: calc(100% - 44px - '+ $u.sys().statusBarHeight+'px);'" scroll-y
 			:refresher-triggered="triggered" @refresherrefresh="handleRefresh" refresher-enabled
@@ -9,7 +9,7 @@
 			scroll-with-animation v-if="index === 'index'">
 			<view class="body">
 				<view class="x ali-cen p10"
-					:style="'background-color: '+$halo.info.mianColor+';color: ' + $halo.info.mianTextColor">
+					:style="'background-color: '+$halo.info.mainColor+';color: ' + $halo.info.mainTextColor">
 					<u-image :src="$halo.info.logo" width="50rpx" height="50rpx" shape="circle"></u-image>
 					<view class="title">
 						{{ $halo.info.title }}
@@ -45,7 +45,7 @@
 					</view>
 					<view class="category y" v-else>
 						<view class="x">
-							<view class="y ali-cen m10" v-for="(item, index) in categoriesTop">
+							<view class="y ali-cen m10" v-for="(item, index) in categoriesTop" :key="index">
 								<image :key="index" :src="item.cover || $halo.info.logo" class="image">
 								</image>
 								<view class="text">
@@ -54,7 +54,7 @@
 							</view>
 						</view>
 						<view class="x">
-							<view class="y ali-cen m10" v-for="(item, index) in categoriesBottom">
+							<view class="y ali-cen m10" v-for="(item, index) in categoriesBottom" :key="index">
 								<image :key="index" :src="item.cover || $halo.info.logo" class="image">
 								</image>
 								<view class="text">

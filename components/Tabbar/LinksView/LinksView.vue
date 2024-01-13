@@ -1,7 +1,7 @@
 <template>
 	<view class="links-view">
-		<u-navbar title="友链" placeholder :is-back="false" :background="{background:$halo.info.mianColor}"
-			:title-color="$halo.info.mianTextColor">
+		<u-navbar title="友链" placeholder :is-back="false" :background="{background:$halo.info.mainColor}"
+			:title-color="$halo.info.mainTextColor">
 		</u-navbar>
 		<scroll-view class="body" :style="'height: calc(100% - 44px - '+ $u.sys().statusBarHeight+'px);'" scroll-y
 			:refresher-triggered="triggered" @refresherrefresh="handleRefresh" refresher-enabled
@@ -15,9 +15,12 @@
 						<view class="mt10 u-line-2" style="text-align: center;">
 							{{item.displayName}}
 						</view>
-						<view class="x juc-bet p10" style="width: 100%;">
-							<view class="link-btn" @click="handleCopy(item)">复制</view>
-							<view class="link-btn" @click="handleWebView(item)">打开</view>
+						<view class="x juc-cen p10" style="width: 100%;">
+							<!-- <view class="link-btn" @click="handleCopy(item)">复制</view> -->
+							<!-- <view class="link-btn" @click="handleWebView(item)">打开</view> -->
+
+							<!-- 小程序只能复制 -->
+							<u-link :href="item.url" under-line font-size="26rpx">打开</u-link>
 						</view>
 					</view>
 				</view>

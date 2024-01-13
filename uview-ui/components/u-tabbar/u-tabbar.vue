@@ -1,30 +1,25 @@
 <template>
-	<view v-if="show" class="u-tabbar" @touchmove.stop.prevent="() => {}">
+	<view v-if="show" class="u-tabbar" @touchmove.stop.prevent="() => {}" :style="'--bgColor:' + bgColor">
 		<view class="u-tabbar__content safe-area-inset-bottom" :style="{
 			height: $u.addUnit(height),
 			backgroundColor: bgColor,
 		}" :class="{
 			'u-border-top': borderTop
 		}">
+			<view class="bulgy" :style="bulgyMove"></view>
 			<view class="u-tabbar__content__item" v-for="(item, index) in list" :key="index" :class="{
 				'u-tabbar__content__circle': midButton &&item.midButton
 			}" @tap.stop="clickHandler(index)" :style="{
 				backgroundColor: bgColor
 			}">
 				<view :class="[
-					midButton && item.midButton ? 'u-tabbar__content__circle__button' : 'u-tabbar__content__item__button'
-				]">
-					<u-icon
-						:size="midButton && item.midButton ? midButtonSize : iconSize"
-						:name="elIconPath(index)"
-						img-mode="scaleToFill"
-						:color="elColor(index)"
-						:custom-prefix="item.customIcon ? 'custom-icon' : 'uicon'"
-					></u-icon>
-					<u-badge :count="item.count" :is-dot="item.isDot"
-						v-if="item.count || item.isDot"
-						:offset="[-2, getOffsetRight(item.count, item.isDot)]"
-					></u-badge>
+					midButton && item.midButton ? 'u-tabbar__content__circle__button' : index === value? 'u-tabbar__content__item__action' :'u-tabbar__content__item__button'
+				]" >
+					<u-icon :size="midButton && item.midButton ? midButtonSize : iconSize" :name="elIconPath(index)"
+						img-mode="scaleToFill" :color="elColor(index)"
+						:custom-prefix="item.customIcon ? 'custom-icon' : 'uicon'"></u-icon>
+					<u-badge :count="item.count" :is-dot="item.isDot" v-if="item.count || item.isDot"
+						:offset="[-2, getOffsetRight(item.count, item.isDot)]"></u-badge>
 				</view>
 				<view class="u-tabbar__content__item__text" :style="{
 					color: elColor(index)
@@ -127,7 +122,7 @@
 		},
 		created() {
 			// 是否隐藏原生tabbar
-			if(this.hideTabBar) uni.hideTabBar();
+			if (this.hideTabBar) uni.hideTabBar();
 			// 获取引入了u-tabbar页面的路由地址，该地址没有路径前面的"/"
 			let pages = getCurrentPages();
 			// 页面栈中的最后一个即为项为当前页面，route属性为页面路径
@@ -142,8 +137,8 @@
 					let pagePath = this.list[index].pagePath;
 					// 如果定义了pagePath属性，意味着使用系统自带tabbar方案，否则使用一个页面用几个组件模拟tabbar页面的方案
 					// 这两个方案对处理tabbar item的激活与否方式不一样
-					if(pagePath) {
-						if(pagePath == this.pageUrl || pagePath == '/' + this.pageUrl) {
+					if (pagePath) {
+						if (pagePath == this.pageUrl || pagePath == '/' + this.pageUrl) {
 							return this.list[index].selectedIconPath;
 						} else {
 							return this.list[index].iconPath;
@@ -158,13 +153,19 @@
 				return (index) => {
 					// 判断方法同理于elIconPath
 					let pagePath = this.list[index].pagePath;
-					if(pagePath) {
-						if(pagePath == this.pageUrl || pagePath == '/' + this.pageUrl) return this.activeColor;
+					if (pagePath) {
+						if (pagePath == this.pageUrl || pagePath == '/' + this.pageUrl) return this.activeColor;
 						else return this.inactiveColor;
 					} else {
 						return index == this.value ? this.activeColor : this.inactiveColor;
 					}
 				}
+			},
+			bulgyMove() {
+				let width = `width: ${100/this.list.length}%;`
+				let left = `left: ${this.value/this.list.length*100}%`
+				let style = width + left;
+				return style;
 			}
 		},
 		mounted() {
@@ -172,7 +173,7 @@
 		},
 		methods: {
 			async clickHandler(index) {
-				if(this.beforeSwitch && typeof(this.beforeSwitch) === 'function') {
+				if (this.beforeSwitch && typeof(this.beforeSwitch) === 'function') {
 					// 执行回调，同时传入索引当作参数
 					// 在微信，支付宝等环境(H5正常)，会导致父组件定义的customBack()函数体中的this变成子组件的this
 					// 通过bind()方法，绑定父组件的this，让this.customBack()的this为父组件的上下文
@@ -185,7 +186,7 @@
 						}).catch(err => {
 
 						})
-					} else if(beforeSwitch === true) {
+					} else if (beforeSwitch === true) {
 						// 如果返回true
 						this.switchTab(index);
 					}
@@ -198,7 +199,7 @@
 				// 发出事件和修改v-model绑定的值
 				this.$emit('change', index);
 				// 如果有配置pagePath属性，使用uni.switchTab进行跳转
-				if(this.list[index].pagePath) {
+				if (this.list[index].pagePath) {
 					uni.switchTab({
 						url: this.list[index].pagePath
 					})
@@ -211,9 +212,9 @@
 			// 计算角标的right值
 			getOffsetRight(count, isDot) {
 				// 点类型，count大于9(两位数)，分别设置不同的right值，避免位置太挤
-				if(isDot) {
+				if (isDot) {
 					return -20;
-				} else if(count > 9) {
+				} else if (count > 9) {
 					return -40;
 				} else {
 					return -30;
@@ -231,6 +232,32 @@
 
 <style scoped lang="scss">
 	@import "../../libs/css/style.components.scss";
+
+	// 凸起
+	.bulgy {
+		height: 60rpx;
+		overflow: hidden;
+		position: absolute;
+		left: 0;
+		top: -38rpx;
+		transition: left 0.2s ease 0s;
+		z-index: 0;
+
+		&:before {
+			content: '';
+			display: block;
+			width: 300rpx;
+			height: 600rpx;
+			border-radius: 50%;
+			background-color: var(--bgColor);
+			position: absolute;
+			top: 0;
+			left: 50%;
+			margin-left: -150rpx;
+			z-index: 1;
+		}
+	}
+
 	.u-fixed-placeholder {
 		/* #ifndef APP-NVUE */
 		box-sizing: content-box;
@@ -284,6 +311,8 @@
 					position: absolute;
 					top: 14rpx;
 					left: 50%;
+					transition: all 0.2s;
+					transform-origin: top;
 					transform: translateX(-50%);
 				}
 
@@ -298,6 +327,16 @@
 					width: 100%;
 					text-align: center;
 				}
+
+				&__action {
+					position: absolute;
+					top: 14rpx;
+					left: 50%;
+					transition: all 0.2s;
+					transform-origin: bottom;
+					transform: translateX(-50%) scale(1.2) translateY(-14rpx);
+
+				}
 			}
 
 			&__circle {
@@ -308,8 +347,8 @@
 				z-index: 10;
 				/* #ifndef APP-NVUE */
 				height: calc(100% - 1px);
-				/* #endif */
 
+				/* #endif */
 				&__button {
 					width: 90rpx;
 					height: 90rpx;
