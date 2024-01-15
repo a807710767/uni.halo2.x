@@ -1,9 +1,21 @@
 <script>
-	import storage from '@/lib/storage.js'
+	import api from '@/api/index.js'
 	export default {
-
-		onLaunch: function() {
-
+		onLaunch: async function() {
+			// if (Object.keys(this.$halo.categoriesMap).length === 0) {
+			// 	await api.categories().then(res => {
+			// 		res.items.map(item => {
+			// 			this.$halo.categoriesMap[item.metadata.name] = item.spec.displayName
+			// 		})
+			// 	})
+			// }
+			// if (Object.keys(this.$halo.tagsMap).length === 0) {
+			// 	await api.tags().then(res => {
+			// 		res.items.map(item => {
+			// 			this.$halo.tagsMap[item.metadata.name] = item.spec.displayName
+			// 		})
+			// 	})
+			// }
 			const updateManager = uni.getUpdateManager()
 			updateManager.onCheckForUpdate(function(res) {
 
@@ -42,7 +54,8 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
-		}
+		},
+
 	}
 </script>
 

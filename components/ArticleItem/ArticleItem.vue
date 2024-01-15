@@ -1,5 +1,5 @@
 <template>
-	<view class="article-item">
+	<view class="article-item" @click="handleDetail">
 		<view class="y" v-if="$halo.info.layout === 'col'">
 			<u-image :src="data.cover" class="cover"></u-image>
 			<view class="p10">
@@ -67,6 +67,13 @@
 		},
 		data() {
 			return {};
+		},
+		methods: {
+			handleDetail() {
+				uni.navigateTo({
+					url: '/pages/detail/detail?name=' + this.data.name
+				})
+			}
 		}
 	}
 </script>
