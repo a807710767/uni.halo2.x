@@ -1,7 +1,7 @@
 <template>
 	<view class="moments-view">
-		<u-navbar title="朋友圈" placeholder :is-back="false" :background="{background:$halo.info.mainColor}"
-			:title-color="$halo.info.mainTextColor">
+		<u-navbar title="朋友圈" placeholder :is-back="false" :border-bottom="false"
+			:background="{background:$halo.info.mainColor}" :title-color="$halo.info.mainTextColor">
 		</u-navbar>
 		<scroll-view class="body" :style="'height: calc(100% - 46px - '+ $u.sys().statusBarHeight+'px);'" scroll-y
 			:refresher-triggered="triggered" @refresherrefresh="handleRefresh" refresher-enabled
@@ -9,6 +9,7 @@
 			<view class="moments-item" v-for="(item,index) in list" :key="index">
 				<view class="content" v-html="item.content">
 				</view>
+				<album v-model="item.medium" keyName="url"></album>
 				<!-- 		<u-album v-if="item.medium && item.medium.length" :urls="item.medium" keyName="url"
 					:multipleSize="item.medium.length === 4?'300':'198'" space="10"
 					:rowCount="item.medium.length === 4?'2':'3'"></u-album> -->
@@ -26,6 +27,7 @@
 
 <script>
 	import LoadingView from '@/components/Loading/Loading.vue'
+	import Album from '@/components/Album/Album.vue'
 	import api from '@/api/index.js'
 	export default {
 		name: "MomentsView",
@@ -44,7 +46,8 @@
 			};
 		},
 		components: {
-			LoadingView
+			LoadingView,
+			Album
 		},
 		mounted() {
 			this.init()

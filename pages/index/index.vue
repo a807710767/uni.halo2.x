@@ -1,6 +1,6 @@
 <template>
 	<view class="index">
-		<view :style="'height: calc(100% - 51px - ' + $u.sys().safeAreaInsets.top +'px);'">
+		<view :style="'height: calc(100% - 51px - ' + $u.sys().safeAreaInsets.bottom +'px);'">
 			<IndexView v-if="index === 0" index="index" ref="index"></IndexView>
 			<MomentsView v-if="index === 1" index="moments" ref="moments"></MomentsView>
 			<LinksView v-if="index === 2" index="links" ref="links"></LinksView>
@@ -20,7 +20,7 @@
 	export default {
 		data() {
 			return {
-				index: 3,
+				index: 1,
 				list: [{
 					iconPath: 'home',
 					selectedIconPath: "home",
@@ -48,7 +48,7 @@
 		},
 		methods: {
 			changeTab(e) {
-				console.log(e);
+				console.log(this.$u.sys().safeAreaInsets);
 			},
 			click(e) {
 				this.index = e;
@@ -63,5 +63,6 @@
 	.index {
 		height: 100%;
 		width: 100%;
+		/* background-color: #eee; */
 	}
 </style>

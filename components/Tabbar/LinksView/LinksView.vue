@@ -1,6 +1,6 @@
 <template>
 	<view class="links-view">
-		<u-navbar title="友链" placeholder :is-back="false" :background="{background:$halo.info.mainColor}"
+		<u-navbar title="友链" placeholder :is-back="false" :border-bottom="false" :background="{background:$halo.info.mainColor}"
 			:title-color="$halo.info.mainTextColor">
 		</u-navbar>
 		<scroll-view class="body" :style="'height: calc(100% - 44px - '+ $u.sys().statusBarHeight+'px);'" scroll-y

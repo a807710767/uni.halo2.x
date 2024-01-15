@@ -1,6 +1,6 @@
 <template>
 	<view class="index-view">
-		<u-navbar title="首页" placeholder :is-back="false" :background="{background:$halo.info.mainColor}"
+		<u-navbar title="首页" placeholder :is-back="false" :border-bottom="false" :background="{background:$halo.info.mainColor}"
 			:title-color="$halo.info.mainTextColor">
 		</u-navbar>
 		<scroll-view :style="'height: calc(100% - 44px - '+ $u.sys().statusBarHeight+'px);'" scroll-y
@@ -320,6 +320,7 @@
 	.index-view {
 		height: 100%;
 		width: 100%;
+		background-color: #fff;
 	}
 
 	.body {

@@ -1,7 +1,7 @@
 <template>
 	<view class="my-view" :style="'--mainColor:' + $halo.info.mainColor">
-		<u-navbar title="我的" placeholder :is-back="false" :background="{background:$halo.info.mainColor}"
-			:title-color="$halo.info.mainTextColor">
+		<u-navbar title="我的" placeholder :is-back="false" :border-bottom="false"
+			:background="{background:$halo.info.mainColor}" :title-color="$halo.info.mainTextColor">
 		</u-navbar>
 		<scroll-view class="body" :style="'height: calc(100% - 46px - '+ $u.sys().statusBarHeight+'px);'" scroll-y
 			:refresher-triggered="triggered" @refresherrefresh="handleRefresh" refresher-enabled
@@ -34,7 +34,7 @@
 				</view>
 			</view>
 			<view class="y list">
-				<view class="x item juc-bet" v-for="(item,index) in list" :key="index">
+				<view class="x item juc-bet" v-for="(item,index) in list" :key="index" @click="handleClick(index)">
 					<u-icon :name="item.image" :label="item.title" margin-left="15rpx"></u-icon>
 					<view class="x ali-cen">
 						<text class="mr10" style="font-size: 24rpx;color: #999;">{{item.tips}}</text>
@@ -99,6 +99,11 @@
 			this.getStats()
 		},
 		methods: {
+			handleClick(index) {
+				uni.navigateTo({
+					url:'/pages/webView/webView?url=' + 'https://mp.weixin.qq.com/wxawap/wapreportwxadevlog?action=complain_feedback&appid=wxbddc360a262ff7b5&embeddedappid=&hostappid=&pageid=pages%2Findex%2Findex.html%3F&from=3&version_type=1&version_code=0&screenshot_localId=weixin%3A%2F%2Fresourceid%2Fda56b19d42698f06bd1589dbe0fa55dc&sessionid=hash=1532625981&ts=1705301577209&host=&version=671100216&device=2&business_appid=&msgid=&public_lib_version=1141&public_lib_version_str=3.3.1&template_id=#wechat_redirect'
+				})
+			},
 			handleShow() {
 				uni.setNavigationBarTitle({
 					title: '我的'
@@ -106,15 +111,18 @@
 				console.log('onshow');
 			},
 			handleRefresh() {
-
+				this.triggered = true
+				this.getStats()
 			},
 			getStats() {
-				api.stats().then(res => {
+				return api.stats().then(res => {
 					this.category = res.category // 分类
 					this.comment = res.comment // 评论
 					this.post = res.post //文章
 					this.upvote = res.upvote // 点赞
 					this.visit = res.visit // 访问
+				}).finally(() => {
+					this.triggered = false
 				})
 			}
 		}
@@ -181,6 +189,7 @@
 
 				.logo {
 					border: 1px #ddd solid;
+					border-radius: 50%;
 				}
 
 				.title {
