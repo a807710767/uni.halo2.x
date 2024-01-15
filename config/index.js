@@ -3,8 +3,10 @@ const info = {
 	subTitle: '微躯敢高卧，借屋且幽栖',
 	desc: '一个分享技术，人生感悟的个人博客\n生活不止眼前的苟且，还有更多未知的苟且',
 	logo: 'http://cdnpan.qiwo75.com/halo/2024-01-02T15:04:10.585571197-eqdzltvx.jpg',
+	avatar: 'http://cdnpan.qiwo75.com/halo/2024-01-15T21:22:02.449567067-nfumilgm.png',
 	mainColor: '#2979FF',
-	mainTextColor: '#fff'
+	mainTextColor: '#fff',
+	layout: 'row'
 }
 const otherPlatforms = [{
 	name: '微博',

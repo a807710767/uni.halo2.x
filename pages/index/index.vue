@@ -20,7 +20,7 @@
 	export default {
 		data() {
 			return {
-				index: 1,
+				index: 0,
 				list: [{
 					iconPath: 'home',
 					selectedIconPath: "home",

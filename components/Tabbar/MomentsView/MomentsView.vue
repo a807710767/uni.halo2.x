@@ -6,15 +6,21 @@
 		<scroll-view class="body" :style="'height: calc(100% - 46px - '+ $u.sys().statusBarHeight+'px);'" scroll-y
 			:refresher-triggered="triggered" @refresherrefresh="handleRefresh" refresher-enabled
 			:refresher-threshold="50" v-if="index === 'moments'">
+			<image src="http://cdnpan.qiwo75.com/halo/2024-01-12T21:38:14.184237859-izdmsebx.jpg" class="top-covor"
+				mode="aspectFill" style="z-index: -1;">
+			</image>
+			<view class="x head ">
+				<view class="title">
+					{{ $halo.info.title}}
+				</view>
+				<image :src="$halo.info.avatar" class="avatar"></image>
+			</view>
 			<view class="moments-item" v-for="(item,index) in list" :key="index">
 				<view class="content" v-html="item.content">
 				</view>
-				<album v-model="item.medium" keyName="url"></album>
-				<!-- 		<u-album v-if="item.medium && item.medium.length" :urls="item.medium" keyName="url"
-					:multipleSize="item.medium.length === 4?'300':'198'" space="10"
-					:rowCount="item.medium.length === 4?'2':'3'"></u-album> -->
+				<album v-model="item.medium" keyName="url" class="mt10 mb10"></album>
 				<view class="time">
-					——{{item.createTime}}
+					{{item.createTime}}
 				</view>
 			</view>
 			<view style="height: 50rpx;">
@@ -110,19 +116,45 @@
 			box-sizing: border-box;
 		}
 
+		.top-covor {
+			width: 750rpx;
+			height: 400rpx;
+		}
+
+		.head {
+			margin-top: -70rpx;
+			justify-content: flex-end;
+			align-items: flex-start;
+			z-index: 10;
+
+			.title {
+				font-size: 40rpx;
+				font-weight: bold;
+				color: #fff;
+				margin-right: 20rpx;
+			}
+
+			.avatar {
+				margin-right: 30rpx;
+				width: 100rpx;
+				height: 100rpx;
+				border-radius: 8px;
+			}
+		}
+
 		.moments-item {
-			margin: 20rpx;
-			box-shadow: 0rpx 10rpx 12rpx #e8e8e8, inset 0rpx 10rpx 12rpx #f0f0f0;
+			margin-top: 50rpx;
 			padding: 20rpx;
 			border-radius: 8px;
+			font-size: 30rpx;
+			border-bottom: 1px solid #eee;
 
 			.content {
-				font-size: 30rpx;
+				font-size: 34rpx;
 				margin-bottom: 10rpx;
 			}
 
 			.time {
-				text-align: right;
 				font-size: 28rpx;
 			}
 		}

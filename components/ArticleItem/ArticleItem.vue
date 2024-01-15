@@ -1,7 +1,7 @@
 <template>
 	<view class="article-item">
-		<view class="">
-			<image :src="data.cover" class="cover"></image>
+		<view class="y" v-if="$halo.info.layout === 'col'">
+			<u-image :src="data.cover" class="cover"></u-image>
 			<view class="p10">
 				<view class="title ">
 					{{data.title}}
@@ -10,12 +10,37 @@
 					{{data.excerpt}}
 				</view>
 				<view class="x mt10">
-					<u-tag v-for="item in data.categories" :text="$halo.categoriesMap[item]" plainFill :key="item" plain
+					<u-tag v-for="item in data.categories" :key="item" :text="$halo.categoriesMap[item]" plainFill plain
 						size="mini" class="m10"></u-tag>
-					<u-tag v-for="item in data.tags" :text="$halo.tagsMap[item]" icon="tags-fill" plainFill :key="item"
+					<u-tag v-for="item in data.tags" :key="item" :text="$halo.tagsMap[item]" icon="tags-fill" plainFill
 						plain size="mini" type="warning" class="m10"></u-tag>
 				</view>
 				<view class="x juc-bet bottom mt10">
+					<view class="x">
+						<u-icon name="eye-fill" :label="data.visit"></u-icon>
+						<view class="mr10">
+						</view>
+						<u-icon name="account-fill" :label="data.displayName"></u-icon>
+					</view>
+					<view class="">
+						{{ $u.timeFormat(data.publishTime, 'yyyy-mm-dd hh:MM:ss')}}
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="x" v-if="$halo.info.layout === 'row'">
+			<u-image :src="data.cover" width="230rpx" height="230rpx" class="cover-row"
+				:loadingIcon="$halo.info.logo"></u-image>
+			<view class="y juc-bet">
+				<view class="y">
+					<view class="title u-line-2">
+						{{data.title}}
+					</view>
+					<view class="excerpt u-line-2 mt10">
+						{{data.excerpt}}
+					</view>
+				</view>
+				<view class="x">
 					<view class="x">
 						<u-icon name="eye-fill" :label="data.visit"></u-icon>
 						<view class="mr10">
@@ -78,6 +103,12 @@
 		.bottom {
 			color: #737373;
 			font-size: 28rpx;
+		}
+
+
+		.cover-row {
+			flex-shrink: 0;
+			margin-right: 20rpx;
 		}
 	}
 </style>

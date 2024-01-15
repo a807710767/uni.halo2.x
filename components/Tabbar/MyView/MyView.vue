@@ -45,6 +45,9 @@
 			<view class="x juc-cen">
 				©2023 - 2024 By {{$halo.info.title}}
 			</view>
+			<view style="height: 50rpx;">
+
+			</view>
 		</scroll-view>
 	</view>
 </template>
@@ -101,7 +104,8 @@
 		methods: {
 			handleClick(index) {
 				uni.navigateTo({
-					url:'/pages/webView/webView?url=' + 'https://mp.weixin.qq.com/wxawap/wapreportwxadevlog?action=complain_feedback&appid=wxbddc360a262ff7b5&embeddedappid=&hostappid=&pageid=pages%2Findex%2Findex.html%3F&from=3&version_type=1&version_code=0&screenshot_localId=weixin%3A%2F%2Fresourceid%2Fda56b19d42698f06bd1589dbe0fa55dc&sessionid=hash=1532625981&ts=1705301577209&host=&version=671100216&device=2&business_appid=&msgid=&public_lib_version=1141&public_lib_version_str=3.3.1&template_id=#wechat_redirect'
+					url: '/pages/webView/webView?url=' +
+						'https://mp.weixin.qq.com/wxawap/wapreportwxadevlog?action=complain_feedback&appid=wxbddc360a262ff7b5&embeddedappid=&hostappid=&pageid=pages%2Findex%2Findex.html%3F&from=3&version_type=1&version_code=0&screenshot_localId=weixin%3A%2F%2Fresourceid%2Fda56b19d42698f06bd1589dbe0fa55dc&sessionid=hash=1532625981&ts=1705301577209&host=&version=671100216&device=2&business_appid=&msgid=&public_lib_version=1141&public_lib_version_str=3.3.1&template_id=#wechat_redirect'
 				})
 			},
 			handleShow() {
