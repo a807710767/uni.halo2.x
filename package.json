@@ -1,7 +1,7 @@
 {
-  "name": "栖卧",
+  "name": "uni.halo2.x",
   "version": "1.0.0",
-  "description": "栖卧",
+  "description": "uni.halo2.x",
   "main": "main.js",
   "directories": {
     "lib": "lib"
