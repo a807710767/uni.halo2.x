@@ -41,15 +41,13 @@
 					</view>
 				</view>
 				<view class="x">
-					<view class="x">
-						<u-icon name="eye-fill" :label="data.visit"></u-icon>
-						<view class="mr10">
-						</view>
-						<u-icon name="account-fill" :label="data.displayName"></u-icon>
+					<u-icon name="eye-fill" :label="data.visit"></u-icon>
+					<view class="mr10">
 					</view>
-					<view class="">
-						{{ $u.timeFormat(data.publishTime, 'yyyy-mm-dd hh:MM:ss')}}
-					</view>
+					<u-icon name="account-fill" :label="data.displayName"></u-icon>
+				</view>
+				<view class="">
+					{{ $u.timeFormat(data.publishTime, 'yyyy-mm-dd hh:MM:ss')}}
 				</view>
 			</view>
 		</view>

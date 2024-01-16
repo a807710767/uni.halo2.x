@@ -52,14 +52,16 @@
     "mp-weixin" : {
         "appid" : "wxbddc360a262ff7b5",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "es6" : true
         },
         "usingComponents" : true,
         "permission" : {
             "scope.userLocation" : {
                 "desc" : "为了更好的服务，获取定位分配地址"
             }
-        }
+        },
+		"libVersion" : "latest"
     },
     "mp-alipay" : {
         "usingComponents" : true
