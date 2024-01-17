@@ -1,7 +1,7 @@
 <template>
 	<view class="index-view">
-		<u-navbar title="首页" placeholder :is-back="false" :border-bottom="false" :background="{background:$halo.info.mainColor}"
-			:title-color="$halo.info.mainTextColor">
+		<u-navbar title="首页" placeholder :is-back="false" :border-bottom="false"
+			:background="{background:$halo.info.mainColor}" :title-color="$halo.info.mainTextColor">
 		</u-navbar>
 		<scroll-view :style="'height: calc(100% - 44px - '+ $u.sys().statusBarHeight+'px);'" scroll-y
 			:refresher-triggered="triggered" @refresherrefresh="handleRefresh" refresher-enabled
@@ -22,7 +22,7 @@
 					</view>
 				</view>
 				<view class="y m10 ">
-					<u-search disabled @click="handleGoSearch" class="p10"></u-search>
+					<u-search disabled @click="handleGoSearch" @custom="handleGoSearch" class="p10"></u-search>
 					<view class="x">
 
 					</view>
@@ -75,14 +75,16 @@
 							<ArticleItem style="width: 100%" v-for="(article,articleIndex) in articleList"
 								:data="article" :key="articleIndex">
 							</ArticleItem>
-							<u-loadmore :status="articleList.length >= total ? 'nomore':'loading '"
-								nomoreText="我也是有底线的!!!" dashed line />
+							<u-loadmore :status="articleList.length >= total ? 'nomore':'loading '" dashed line />
 						</block>
 						<view class="x ali-cen juc-cen"
 							:style="'min-height:calc( '+ articleHeight +'px - 20rpx);width: 100%;'" v-else>
 							<u-empty mode="data" src="https://cdnpan.qiwo75.com/halo/nodata.png" iconSize="200"
 								textSize="30rpx">
 							</u-empty>
+						</view>
+						<view class="x juc-cen p10">
+							<u-link href="https://beian.miit.gov.cn/">{{$halo.info.beian}}</u-link>
 						</view>
 					</view>
 					<!-- 高度问题没解决 -->

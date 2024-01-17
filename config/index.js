@@ -6,7 +6,8 @@ const info = {
 	avatar: 'http://cdnpan.qiwo75.com/halo/2024-01-15T21:22:02.449567067-nfumilgm.png',
 	mainColor: '#2979FF',
 	mainTextColor: '#fff',
-	layout: 'row'
+	layout: 'row',
+	beian: '琼ICP备19001419号-1'
 }
 const otherPlatforms = [{
 	name: '微博',

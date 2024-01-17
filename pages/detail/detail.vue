@@ -68,6 +68,10 @@
 			}
 			this.getDetail()
 		},
+		onPullDownRefresh() {
+			uni.startPullDownRefresh();
+			this.getDetail()
+		},
 		methods: {
 			getDetail() {
 				this.$refs.LoadingView.open()
@@ -88,6 +92,7 @@
 					})
 				}).finally(() => {
 					this.$refs.LoadingView.close()
+					uni.stopPullDownRefresh()
 				})
 			}
 		}
