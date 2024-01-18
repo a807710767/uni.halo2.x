@@ -61,7 +61,7 @@
                 "desc" : "为了更好的服务，获取定位分配地址"
             }
         },
-		"libVersion" : "latest"
+        "libVersion" : "latest"
     },
     "mp-alipay" : {
         "usingComponents" : true
@@ -77,6 +77,10 @@
     },
     "h5" : {
         "title" : "栖卧",
-        "template" : ""
+        "template" : "",
+        "router" : {
+            "mode" : "hash",
+            "base" : "./"
+        }
     }
 }

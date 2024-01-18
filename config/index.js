@@ -7,7 +7,7 @@ const info = {
 	mainColor: '#2979FF',
 	mainTextColor: '#fff',
 	layout: 'row',
-	beian: '琼ICP备19001419号-1'
+	beian: '琼ICP备19001419号-2'
 }
 const otherPlatforms = [{
 	name: '微博',

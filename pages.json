@@ -32,6 +32,14 @@
 				"navigationStyle": "default",
 				"enablePullDownRefresh": true
 			}
+		},
+		{
+			"path" : "pages/searchKeyword/searchKeyword",
+			"style" : 
+			{
+				"navigationBarTitleText" : "搜索结果",
+				"enablePullDownRefresh" : true
+			}
 		}
 	],
 	"globalStyle": {
