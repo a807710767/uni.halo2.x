@@ -39,6 +39,7 @@
 
 		</view>
 		<LoadingView ref="LoadingView"></LoadingView>
+		<u-back-top :scroll-top="scrollTop"></u-back-top>
 	</view>
 </template>
 
@@ -52,8 +53,12 @@
 		data() {
 			return {
 				name: '',
+				scrollTop: 0,
 				data: {}
 			}
+		},
+		onPageScroll(e) {
+			this.scrollTop = e.scrollTop;
 		},
 		onLoad(op) {
 			this.name = op.name

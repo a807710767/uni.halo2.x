@@ -6,9 +6,9 @@
 		<scroll-view :style="'height: calc(100% - 44px - '+ $u.sys().statusBarHeight+'px);'" scroll-y
 			:refresher-triggered="triggered" @refresherrefresh="handleRefresh" refresher-enabled
 			@scrolltolower="handleBottom" :refresher-threshold="50" enable-flex :scroll-into-view="scrollId"
-			scroll-with-animation v-if="index === 'index'">
+			scroll-with-animation v-if="index === 'index'" @scroll="scrollView">
 			<view class="body">
-				<view class="x ali-cen p10"
+				<view class="x ali-cen p10" id="top"
 					:style="'background-color: '+$halo.info.mainColor+';color: ' + $halo.info.mainTextColor">
 					<u-image :src="$halo.info.logo" width="50rpx" height="50rpx" shape="circle"></u-image>
 					<view class="title">
@@ -67,7 +67,8 @@
 				<!-- tags -->
 				<block v-if="tags && tags.length">
 					<view id="tags" class="tags">
-						<u-tabs :current="tagIndex" :list="tags" name="displayName" @change="handleTags"></u-tabs>
+						<u-tabs ref="tabsRef" :current="tagIndex" :list="tags" name="displayName"
+							@change="handleTags"></u-tabs>
 					</view>
 					<view class="p20"
 						:style="'min-height:calc( '+ articleHeight +'px - 20rpx);width: 100%;box-sizing:border-box'">
@@ -112,6 +113,11 @@
 			</view>
 		</scroll-view>
 		<LoadingView ref="LoadingView"></LoadingView>
+		<transition name="fade">
+			<view class="back-top" v-show="showBackTop" @click="handleBackTop">
+				<image src="/static/imgs/toTop.gif" class="image"></image>
+			</view>
+		</transition>
 	</view>
 </template>
 
@@ -135,6 +141,7 @@
 				tagIndex: 0,
 				swiperList: [],
 				triggered: false,
+				showBackTop: false,
 				categories: [],
 				categoriesTop: [],
 				categoriesBottom: [],
@@ -181,7 +188,23 @@
 				uni.setNavigationBarTitle({
 					title: this.$halo.info.title + ' - ' + this.$halo.info.subTitle
 				})
-				console.log('onshow');
+				// if (this.$refs.tabsRef) {
+				// 	this.$refs.tabsRef.init()
+				// }
+				console.log('indexOnshow');
+			},
+			scrollView(e) {
+				this.$u.debounce(() => {
+					if (e.detail.scrollTop > 100) {
+						this.scrollId = ''
+						this.showBackTop = true
+					} else {
+						this.showBackTop = false
+					}
+				}, 300)
+			},
+			handleBackTop() {
+				this.scrollId = 'top'
 			},
 			handleRefresh() {
 				this.page = 1
@@ -326,6 +349,22 @@
 		background-color: #fff;
 	}
 
+	.back-top {
+		position: fixed;
+		right: 80rpx;
+		bottom: 30%;
+		z-index: 9999;
+		width: 40rpx;
+		height: 40rpx;
+
+		.image {
+			width: 68rpx;
+			height: 68rpx;
+			border-radius: 50%;
+			border: 1px solid #2979FF;
+		}
+	}
+
 	.body {
 		width: 100%;
 		box-sizing: border-box;
@@ -378,5 +417,7 @@
 			height: auto;
 			// overflow-y: auto;
 		}
+
+
 	}
 </style>
