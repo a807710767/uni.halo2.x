@@ -28,7 +28,7 @@
 				keyword: '',
 				list: [],
 				style: {
-					b: 'color:#f00'
+					b: 'background-color:#FFFF00'
 				}
 			}
 		},
@@ -61,6 +61,11 @@
 			uni.startPullDownRefresh();
 			this.getList()
 		},
+		mounted() {
+			if (this.keyword) {
+				this.getList()
+			}
+		},
 		onLoad(op) {
 			this.keyword = op.keyword
 			if (!this.keyword) {
@@ -73,7 +78,6 @@
 				})
 				return
 			}
-			this.getList()
 		}
 	}
 </script>
