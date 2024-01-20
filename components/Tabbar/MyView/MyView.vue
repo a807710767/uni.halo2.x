@@ -34,13 +34,14 @@
 				</view>
 			</view>
 			<view class="y list">
-				<view class="x item juc-bet" v-for="(item,index) in list" :key="index" @click="handleClick(index)">
+				<button class="x item juc-bet" v-for="(item,index) in list" :key="index" @click="handleClick(item)"
+					:open-type="typeMap[item.type]">
 					<u-icon :name="item.image" :label="item.title" margin-left="15rpx"></u-icon>
 					<view class="x ali-cen">
 						<text class="mr10" style="font-size: 24rpx;color: #999;">{{item.tips}}</text>
 						<u-icon name="arrow-right" color="#777"></u-icon>
 					</view>
-				</view>
+				</button>
 			</view>
 			<view class="x juc-cen">
 				©2023 - 2024 By {{$halo.info.title}}
@@ -71,23 +72,44 @@
 				post: '--',
 				upvote: '--',
 				visit: '--',
+				typeMap: {
+					'0': '',
+					'1': 'feedback',
+					'2': 'content',
+					'3': 'share'
+				},
 				list: [{
+					type: '0', // 0站内 1反馈面板 2客服小程序  3分享
+					url: '/pages/myContact/myContact',
 					image: 'account-fill',
 					title: '联系博主',
 					tips: '博主社交平台'
 				}, {
+					type: '2',
 					image: 'account-fill',
 					title: '在线客服',
 					tips: '可以留言给我哟'
 				}, {
+					type: '1',
+					url: '',
 					image: 'account-fill',
 					title: '意见反馈',
 					tips: '提交使用意见~不定期迭代'
 				}, {
+					type: '0',
+					url: '/pages/project/project',
 					image: 'account-fill',
 					title: '关于项目',
 					tips: '项目开源简介'
 				}, {
+					type: '3',
+					url: '',
+					image: 'account-fill',
+					title: '分享应用',
+					tips: '分享此博客'
+				}, {
+					type: '0',
+					url: '/pages/disclaimers/disclaimers',
 					image: 'account-fill',
 					title: '免责声明',
 					tips: '博客内容的说明'
@@ -102,11 +124,12 @@
 			this.getStats()
 		},
 		methods: {
-			handleClick(index) {
-				uni.navigateTo({
-					url: '/pages/webView/webView?url=' +
-						'https://mp.weixin.qq.com/wxawap/wapreportwxadevlog?action=complain_feedback&appid=wxbddc360a262ff7b5&embeddedappid=&hostappid=&pageid=pages%2Findex%2Findex.html%3F&from=3&version_type=1&version_code=0&screenshot_localId=weixin%3A%2F%2Fresourceid%2Fda56b19d42698f06bd1589dbe0fa55dc&sessionid=hash=1532625981&ts=1705301577209&host=&version=671100216&device=2&business_appid=&msgid=&public_lib_version=1141&public_lib_version_str=3.3.1&template_id=#wechat_redirect'
-				})
+			handleClick(item) {
+				if (item.type === '0') {
+					uni.navigateTo({
+						url: item.url
+					})
+				}
 			},
 			handleShow() {
 				uni.setNavigationBarTitle({
@@ -249,7 +272,20 @@
 				.item {
 					padding: 10rpx;
 					margin: 10rpx;
-					border-bottom: 1px #eee solid;
+					background: transparent;
+					box-shadow: none;
+					border-bottom: 1px solid #eee;
+
+					// 去掉烦人的边框
+					&::after {
+						border: 0; // 或者 border: none;
+					}
+
+					// 调整禁用时的样式
+					&[disabled] {
+						background-color: #fff;
+						color: #eee;
+					}
 
 					&:last-child {
 						border: none;

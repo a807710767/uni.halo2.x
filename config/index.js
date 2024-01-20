@@ -10,17 +10,25 @@ const info = {
 	beian: '琼ICP备19001419号-2'
 }
 const otherPlatforms = [{
-	name: '微博',
+	name: 'QQ号',
+	url: '807710767',
+	icon: 'weibo-circle-fill'
+}, {
+	name: '微信号',
+	url: 'qiwo778',
+	icon: 'weibo-circle-fill'
+}, {
+	name: '微博地址',
 	url: 'https://m.weibo.cn/u/2449565780',
-	icon: 'weibo-circle-fill' //uview的icon 可以网络图片
+	icon: 'weibo-circle-fill'
 }, {
-	name: '知乎',
+	name: '知乎地址',
 	url: 'https://www.zhihu.com/people/qi-wo-42-89',
-	icon: 'zhihu-circle-fill' //uview的icon 可以网络图片
+	icon: 'zhihu-circle-fill'
 }, {
-	name: '掘金',
+	name: '掘金地址',
 	url: 'https://www.zhihu.com/people/qi-wo-42-89',
-	icon: 'zhihu-circle-fill' //uview的icon 可以网络图片
+	icon: 'zhihu-circle-fill'
 }]
 const disclaimers = [
 	'本博客主要是为了记录工作、学习中遇到的问题，可能由于本人技术有限，内容难免有纰漏，一切内容仅供参考。',

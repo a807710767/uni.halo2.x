@@ -40,6 +40,33 @@
 				"navigationBarTitleText" : "搜索结果",
 				"enablePullDownRefresh" : true
 			}
+		},
+		{
+			"path" : "pages/disclaimers/disclaimers",
+			"style" : 
+			{
+				"navigationBarTitleText" : "免责声明",
+				"navigationStyle": "default",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/myContact/myContact",
+			"style" : 
+			{
+				"navigationBarTitleText" : "联系博主",
+				"navigationStyle": "default",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/project/project",
+			"style" : 
+			{
+				"navigationBarTitleText" : "关于项目",
+				"navigationStyle": "default",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {
