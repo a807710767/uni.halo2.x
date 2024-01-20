@@ -34,8 +34,8 @@
 				<!-- 分类 -->
 				<view class="ml10 mr10 p10" v-if="categories && categories.length">
 					<view class="category x" v-if="categories.length <= 10">
-						<view class="y ali-cen m10" v-for="(item, index) in categories">
-							<image :key="index" :src="item.cover || $halo.info.logo" class="image">
+						<view class="y ali-cen m10" v-for="(item, index) in categories" :key="index">
+							<image :src="item.cover || $halo.info.logo" class="image">
 							</image>
 							<view class="text">
 								{{item.name}}
@@ -279,6 +279,7 @@
 							cover: item.spec.cover,
 						}
 					})
+					this.categories.reverse()
 					if (this.categories.length > 10) {
 						this.categoriesTop = []
 						this.categoriesBottom = []

@@ -1,7 +1,7 @@
 <template>
 	<view class="article-item" @click="handleDetail">
 		<view class="y" v-if="$halo.info.layout === 'col'">
-			<u-image :src="data.cover" class="cover"></u-image>
+			<image :src="data.cover" class="cover"></image>
 			<view class="p10">
 				<view class="title ">
 					{{data.title}}
@@ -10,10 +10,10 @@
 					{{data.excerpt}}
 				</view>
 				<view class="x mt10">
-					<u-tag v-for="item in data.categories" :key="item" :text="$halo.categoriesMap[item]" plainFill plain
-						size="mini" class="m10"></u-tag>
-					<u-tag v-for="item in data.tags" :key="item" :text="$halo.tagsMap[item]" icon="tags-fill" plainFill
-						plain size="mini" type="warning" class="m10"></u-tag>
+					<u-tag v-for="(item,index) in data.categories" :key="index" :text="$halo.categoriesMap[item]"
+						plainFill plain size="mini" class="m10"></u-tag>
+					<u-tag v-for="(item,index) in data.tags" :key="index" :text="$halo.tagsMap[item]" icon="tags-fill"
+						plainFill plain size="mini" type="warning" class="m10"></u-tag>
 				</view>
 				<view class="x juc-bet bottom mt10">
 					<view class="x">
@@ -46,7 +46,7 @@
 					</view>
 					<u-icon name="account-fill" :label="data.displayName"></u-icon>
 				</view>
-				<view class="">
+				<view class="bottom">
 					{{ $u.timeFormat(data.publishTime, 'yyyy-mm-dd hh:MM:ss')}}
 				</view>
 			</view>

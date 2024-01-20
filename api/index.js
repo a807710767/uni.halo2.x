@@ -99,4 +99,11 @@ export default {
 			params
 		});
 	},
+	counter(params) {
+		return fetch({
+			url: `/apis/api.halo.run/v1alpha1/trackers/counter`,
+			method: 'post',
+			params
+		});
+	},
 }

@@ -3,35 +3,36 @@
 		<view style="height: 20rpx;">
 
 		</view>
-		<view class="head y ali-cen">
+		<view class="head y ali-cen" v-if="data && data.spec">
 			<view class="title">
 				{{ data.spec.title}}
 			</view>
 			<view class="">
 				作者：{{data.owner.displayName}}
 			</view>
-			<view class="" v-if="data.spec">
+			<view class="">
 				时间 ：{{$u.timeFormat(data.spec.publishTime, 'yyyy-mm-dd hh:MM:ss')}}
 			</view>
 			<u-image :src="data.spec.cover" width="600rpx" height="400rpx" style="margin: 10 auto;"></u-image>
 		</view>
-		<view class="category-tag">
+		<view class="category-tag" v-if="data && data.spec">
 			<view class="x category" style="flex-wrap: wrap;">
 				<view class="mr10">
 					分类：
 				</view>
-				<u-tag v-for="item in data.categories" :key="item" :text="item.spec.displayName" class="mr10">
+				<u-tag v-for="(item,index) in data.categories" :key="index" :text="item.spec.displayName" class="mr10">
 				</u-tag>
 			</view>
 			<view class="tag x mt10">
 				<view class="mr10">
 					标签：
 				</view>
-				<u-tag v-for="item in data.tags" :key="item" :text="item.spec.displayName" class="mr10" type="warning">
+				<u-tag v-for="(item,index) in data.tags" :key="index" :text="item.spec.displayName" class="mr10"
+					type="warning">
 				</u-tag>
 			</view>
 		</view>
-		<view class="content">
+		<view class="content" v-if="data && data.content">
 			<u-parse :html="data.content.content" selectable show-with-animation></u-parse>
 		</view>
 		<view style="height: 50rpx;">
@@ -65,8 +66,13 @@
 						uni.navigateBack()
 					}
 				})
+				return
 			}
-			this.getDetail()
+		},
+		mounted() {
+			if (this.name) {
+				this.getDetail()
+			}
 		},
 		onPullDownRefresh() {
 			uni.startPullDownRefresh();
@@ -74,6 +80,7 @@
 		},
 		methods: {
 			getDetail() {
+				console.log(this.$refs, this.$refs.LoadingView)
 				this.$refs.LoadingView.open()
 				api.details({
 					name: this.name

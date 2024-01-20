@@ -36,7 +36,7 @@
 			<view class="y list">
 				<button class="x item juc-bet" v-for="(item,index) in list" :key="index" @click="handleClick(item)"
 					:open-type="typeMap[item.type]">
-					<u-icon :name="item.image" :label="item.title" margin-left="15rpx"></u-icon>
+					<u-icon :name="item.image" :label="item.title" margin-left="15rpx" size="40rpx"></u-icon>
 					<view class="x ali-cen">
 						<text class="mr10" style="font-size: 24rpx;color: #999;">{{item.tips}}</text>
 						<u-icon name="arrow-right" color="#777"></u-icon>
@@ -75,42 +75,42 @@
 				typeMap: {
 					'0': '',
 					'1': 'feedback',
-					'2': 'content',
+					'2': 'contact',
 					'3': 'share'
 				},
 				list: [{
 					type: '0', // 0站内 1反馈面板 2客服小程序  3分享
 					url: '/pages/myContact/myContact',
-					image: 'account-fill',
+					image: 'https://cdnpan.qiwo75.com/halo/contact.png',
 					title: '联系博主',
 					tips: '博主社交平台'
 				}, {
 					type: '2',
-					image: 'account-fill',
+					image: 'https://cdnpan.qiwo75.com/halo/service.png',
 					title: '在线客服',
 					tips: '可以留言给我哟'
 				}, {
 					type: '1',
 					url: '',
-					image: 'account-fill',
+					image: 'https://cdnpan.qiwo75.com/halo/feedback.png',
 					title: '意见反馈',
 					tips: '提交使用意见~不定期迭代'
 				}, {
 					type: '0',
 					url: '/pages/project/project',
-					image: 'account-fill',
+					image: 'https://cdnpan.qiwo75.com/halo/project.png',
 					title: '关于项目',
 					tips: '项目开源简介'
 				}, {
 					type: '3',
 					url: '',
-					image: 'account-fill',
+					image: 'https://cdnpan.qiwo75.com/halo/share.png',
 					title: '分享应用',
 					tips: '分享此博客'
 				}, {
 					type: '0',
 					url: '/pages/disclaimers/disclaimers',
-					image: 'account-fill',
+					image: 'https://cdnpan.qiwo75.com/halo/mianze.png',
 					title: '免责声明',
 					tips: '博客内容的说明'
 				}]
