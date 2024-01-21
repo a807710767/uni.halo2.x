@@ -1,4 +1,5 @@
 const info = {
+	domain: 'https://qiwo75.com',
 	title: '栖卧',
 	subTitle: '微躯敢高卧，借屋且幽栖',
 	desc: '一个分享技术，人生感悟的个人博客\n生活不止眼前的苟且，还有更多未知的苟且',

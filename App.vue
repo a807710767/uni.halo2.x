@@ -2,23 +2,26 @@
 	import api from '@/api/index.js'
 	export default {
 		onLaunch: async function() {
-			// if (Object.keys(this.$halo.categoriesMap).length === 0) {
-			// 	await api.categories().then(res => {
-			// 		res.items.map(item => {
-			// 			this.$halo.categoriesMap[item.metadata.name] = item.spec.displayName
-			// 		})
-			// 	})
-			// }
-			// if (Object.keys(this.$halo.tagsMap).length === 0) {
-			// 	await api.tags().then(res => {
-			// 		res.items.map(item => {
-			// 			this.$halo.tagsMap[item.metadata.name] = item.spec.displayName
-			// 		})
-			// 	})
-			// }
+			if (Object.keys(this.$halo.categoriesMap).length === 0) {
+				await api.categories().then(res => {
+					res.items.map(item => {
+						const categoriesMap = {}
+						this.$halo.categoriesMap[item.metadata.name] = item.spec.displayName
+					})
+				})
+			}
+			if (Object.keys(this.$halo.tagsMap).length === 0) {
+				await api.tags().then(res => {
+					res.items.map(item => {
+						const tagsMap = {}
+						this.$halo.tagsMap[item.metadata.name] = item.spec.displayName
+					})
+				})
+			}
+			
+			
 			const updateManager = uni.getUpdateManager()
 			updateManager.onCheckForUpdate(function(res) {
-
 				// 请求完新版本信息的回调
 				if (!res.hasUpdate) {
 

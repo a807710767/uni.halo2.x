@@ -67,6 +67,15 @@
 				"navigationStyle": "default",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/category/category",
+			"style" : 
+			{
+				"navigationBarTitleText" : "分类",
+				"navigationStyle": "default",
+				"enablePullDownRefresh" : true
+			}
 		}
 	],
 	"globalStyle": {

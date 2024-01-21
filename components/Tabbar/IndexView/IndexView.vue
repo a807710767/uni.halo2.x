@@ -34,7 +34,8 @@
 				<!-- 分类 -->
 				<view class="ml10 mr10 p10" v-if="categories && categories.length">
 					<view class="category x" v-if="categories.length <= 10">
-						<view class="y ali-cen m10" v-for="(item, index) in categories" :key="index">
+						<view class="y ali-cen m10" v-for="(item, index) in categories" :key="index"
+							@click="handleCategory(item)">
 							<image :src="item.cover || $halo.info.logo" class="image">
 							</image>
 							<view class="text">
@@ -45,7 +46,8 @@
 					</view>
 					<view class="category y" v-else>
 						<view class="x">
-							<view class="y ali-cen m10" v-for="(item, index) in categoriesTop" :key="index">
+							<view class="y ali-cen m10" v-for="(item, index) in categoriesTop" :key="index"
+								@click="handleCategory(item)">
 								<image :key="index" :src="item.cover || $halo.info.logo" class="image">
 								</image>
 								<view class="text">
@@ -54,7 +56,8 @@
 							</view>
 						</view>
 						<view class="x">
-							<view class="y ali-cen m10" v-for="(item, index) in categoriesBottom" :key="index">
+							<view class="y ali-cen m10" v-for="(item, index) in categoriesBottom" :key="index"
+								@click="handleCategory(item)">
 								<image :key="index" :src="item.cover || $halo.info.logo" class="image">
 								</image>
 								<view class="text">
@@ -113,11 +116,9 @@
 			</view>
 		</scroll-view>
 		<LoadingView ref="LoadingView"></LoadingView>
-		<transition name="fade">
-			<view class="back-top" v-show="showBackTop" @click="handleBackTop">
-				<image src="/static/imgs/toTop.gif" class="image"></image>
-			</view>
-		</transition>
+		<view class="back-top" v-show="showBackTop" @click="handleBackTop">
+			<image src="/static/imgs/toTop.gif" class="image"></image>
+		</view>
 	</view>
 </template>
 
@@ -203,6 +204,11 @@
 					}
 				}, 300)
 			},
+			handleCategory(item) {
+				uni.navigateTo({
+					url: '/pages/category/category?name=' + item.metadata
+				})
+			},
 			handleBackTop() {
 				this.scrollId = 'top'
 			},
@@ -243,7 +249,6 @@
 							...item.spec,
 							...item.stats,
 							...item.status
-
 						}
 					})
 					if (this.page === 1) {
@@ -303,6 +308,11 @@
 						}
 					})
 					this.categories.reverse()
+					// this.categories.push({
+					// 	metadata: 'all',
+					// 	name: '全部',
+					// 	cover: 'http://cdnpan.qiwo75.com/halo/2024-01-21T21:41:27.253669053-wfauduud.png'
+					// })
 					if (this.categories.length > 10) {
 						this.categoriesTop = []
 						this.categoriesBottom = []

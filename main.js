@@ -12,7 +12,9 @@ Vue.prototype.$uView = {
 let mpShare = require('uview-ui/libs/mixin/mpShare.js');
 Vue.mixin(mpShare)
 App.mpType = 'app'
+
 Vue.config.productionTip = false;
+
 const app = new Vue({
 	...App
 })

@@ -7,7 +7,7 @@
 		opacity: opacity
 	}, customStyle]">
 		<view class="u-back-top__content" v-if="!$slots.default && !$slots.$default">
-			<u-icon @click="backToTop" :name="icon" :custom-style="iconStyle"></u-icon>
+			<u-icon @click="backToTop" :name="icon" :custom-style="iconStyle" size="40rpx"></u-icon>
 			<view class="u-back-top__content__tips">
 				{{tips}}
 			</view>
@@ -71,7 +71,7 @@
 				default() {
 					return {
 						color: '#909399',
-						fontSize: '38rpx'
+						fontSize: '38rpx',
 					}
 				}
 			},

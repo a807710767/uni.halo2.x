@@ -13,6 +13,14 @@
 			<view class="">
 				时间 ：{{$u.timeFormat(data.spec.publishTime, 'yyyy-mm-dd hh:MM:ss')}}
 			</view>
+			<view class="x">
+				<view class="">
+					图片：{{data.spec.htmlMetas[0]['count-images']}}
+				</view>
+				<view class="ml10">
+					字数：{{data.spec.htmlMetas[0]['count-words']}}
+				</view>
+			</view>
 			<u-image :src="data.spec.cover" width="600rpx" height="400rpx" style="margin: 10 auto;"></u-image>
 		</view>
 		<view class="category-tag" v-if="data && data.spec">
@@ -33,28 +41,51 @@
 			</view>
 		</view>
 		<view class="content" v-if="data && data.content">
-			<u-parse :html="data.content.content" selectable show-with-animation></u-parse>
+			<u-parse :html="data.content.content" selectable show-with-animation :tag-style="style"></u-parse>
 		</view>
 		<view style="height: 50rpx;">
 
 		</view>
 		<LoadingView ref="LoadingView"></LoadingView>
-		<u-back-top :scroll-top="scrollTop"></u-back-top>
+		<RotatingMenu v-if="data && data.spec" :btnObj="btnObj" :bottom="300" @click="handleMenuClick"></RotatingMenu>
+		<u-back-top :scroll-top="scrollTop" :icon-style="iconStyle" :custom-style="customStyle"></u-back-top>
 	</view>
 </template>
 
 <script>
 	import api from '@/api/index.js'
 	import LoadingView from '@/components/Loading/Loading.vue'
+	import RotatingMenu from '@/components/RotatingMenu/RotatingMenu.vue'
 	export default {
 		components: {
 			LoadingView,
+			RotatingMenu
 		},
 		data() {
 			return {
 				name: '',
 				scrollTop: 0,
-				data: {}
+				data: {},
+				iconStyle: {
+					fontSize: '32rpx',
+					color: '#fff'
+				},
+				customStyle: {
+					backgroundColor: "#2979ff"
+				},
+				style: {
+					'.language-html': 'color: red;font-size:32rpx'
+				},
+				btnObj: {
+					id: '1',
+					childs: [{
+						id: '1',
+						name: '海报'
+					}, {
+						id: '2',
+						name: '链接'
+					}]
+				}
 			}
 		},
 		onPageScroll(e) {
@@ -84,6 +115,22 @@
 			this.getDetail()
 		},
 		methods: {
+			handleMenuClick(item) {
+				console.log(item)
+				if (item.id === '1') {
+
+				} else if (item.id === '2') {
+					uni.setClipboardData({
+						data: this.$halo.info.domain + this.data.status.permalink,
+						success: function() {
+							uni.showToast({
+								title: `复制成功`,
+								icon: 'none'
+							})
+						}
+					})
+				}
+			},
 			getDetail() {
 				console.log(this.$refs, this.$refs.LoadingView)
 				this.$refs.LoadingView.open()
@@ -142,6 +189,11 @@
 			background-color: #fff;
 			padding: 20rpx;
 			border-radius: 5px;
+		}
+
+		.language-html {
+			color: red;
+			font-size: 32rpx
 		}
 	}
 </style>

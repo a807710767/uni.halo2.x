@@ -78,6 +78,13 @@ export default {
 			params
 		});
 	},
+	categoryPosts(params) {
+		return fetch({
+			url: `/apis/api.content.halo.run/v1alpha1/categories/${params.name}/posts`,
+			method: 'get',
+			params
+		})
+	},
 	tags(params) {
 		return fetch({
 			url: `/apis/api.content.halo.run/v1alpha1/tags`,
