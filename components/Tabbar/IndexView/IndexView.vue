@@ -87,9 +87,11 @@
 								textSize="30rpx">
 							</u-empty>
 						</view>
+						<!-- #ifdef H5 -->
 						<view class="x juc-cen p10">
 							<u-link href="https://beian.miit.gov.cn/">{{$halo.info.beian}}</u-link>
 						</view>
+						<!-- #endif -->
 					</view>
 					<!-- 高度问题没解决 -->
 					<!-- <swiper :current="tagIndex" @change="handleSwiper"
