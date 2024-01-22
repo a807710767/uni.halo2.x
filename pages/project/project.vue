@@ -22,23 +22,28 @@
 		},
 		methods: {
 			handleClick(type) { // 处理点击事件，根据type跳转到相应的链接。
+				let url = ''
 				if (type === 1) {
-					uni.navigateTo({
-						url: this.$halo.info.domain
-					});
-				} else if (type === 2) {
-					uni.navigateTo({
-						url: 'https://gitee.com/qiwo/uni.halo2.x'
-					});
-				} else if (type === 3) {
-					uni.navigateTo({
-						url: 'https://www.halo.run/'
-					});
-				} else if (type === 4) {
-					uni.navigateTo({
-						url: 'https://docs.halo.run/'
-					});
+					url: this.$halo.info.domain
 				}
+				else if (type === 2) {
+					url: 'https://gitee.com/qiwo/uni.halo2.x'
+				}
+				else if (type === 3) {
+					url: 'https://www.halo.run/'
+				}
+				else if (type === 4) {
+					url: 'https://docs.halo.run/'
+				}
+				uni.setClipboardData({
+					data: url,
+					success: function() {
+						uni.showToast({
+							title: `复制成功`,
+							icon: 'none'
+						})
+					}
+				})
 			}
 		}
 	}
