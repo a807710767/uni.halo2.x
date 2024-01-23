@@ -8,7 +8,7 @@
 			<u-cell-item title="作者博客" :arrow="true" @click="handleClick(1)"></u-cell-item>
 			<u-cell-item title="码云仓库" :arrow="true" @click="handleClick(2)"></u-cell-item>
 			<u-cell-item title="halo官方" :arrow="true" @click="handleClick(3)"></u-cell-item>
-			<u-cell-item title="halo文档" :arrow="true" @click="handleClick(3)"></u-cell-item>
+			<u-cell-item title="halo文档" :arrow="true" @click="handleClick(4)"></u-cell-item>
 		</u-cell-group>
 	</view>
 </template>
