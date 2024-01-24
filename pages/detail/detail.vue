@@ -48,6 +48,7 @@
 		</view>
 		<LoadingView ref="LoadingView"></LoadingView>
 		<RotatingMenu v-if="data && data.spec" :btnObj="btnObj" :bottom="300" @click="handleMenuClick"></RotatingMenu>
+		<Poster ref="posterRef"></Poster>
 		<u-back-top :scroll-top="scrollTop" :icon-style="iconStyle" :custom-style="customStyle"></u-back-top>
 	</view>
 </template>
@@ -56,10 +57,12 @@
 	import api from '@/api/index.js'
 	import LoadingView from '@/components/Loading/Loading.vue'
 	import RotatingMenu from '@/components/RotatingMenu/RotatingMenu.vue'
+	import Poster from '@/components/Poster/Poster.vue'
 	export default {
 		components: {
 			LoadingView,
-			RotatingMenu
+			RotatingMenu,
+			Poster
 		},
 		data() {
 			return {
@@ -139,6 +142,7 @@
 				}).then(res => {
 					console.log(res)
 					this.data = res
+					this.$refs.posterRef.drag()
 				}).catch(err => {
 					console.log(res)
 					uni.showModal({

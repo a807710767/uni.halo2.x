@@ -6,6 +6,7 @@ const info = {
 	logo: 'http://cdnpan.qiwo75.com/halo/2024-01-02T15:04:10.585571197-eqdzltvx.jpg',
 	avatar: 'http://cdnpan.qiwo75.com/halo/2024-01-15T21:22:02.449567067-nfumilgm.png',
 	mainColor: '#2979FF',
+	subColor: '#643dff',
 	mainTextColor: '#fff',
 	layout: 'row',
 	beian: '琼ICP备19001419号-2'
