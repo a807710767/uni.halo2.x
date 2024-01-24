@@ -43,7 +43,7 @@
 					data: item.url,
 					success: function() {
 						uni.showToast({
-							title: `${item.name}¸´ÖÆ³É¹¦`,
+							title: `${item.name}å¤åˆ¶æˆåŠŸ`,
 							icon: 'none'
 						})
 					}
