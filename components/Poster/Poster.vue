@@ -40,22 +40,26 @@
 						avatarurl_x = 40, //绘制的头像在画布上的位置
 						avatarurl_y = 28, //绘制的头像在画布上的位置
 
-						codeurl_width = 180, //绘制的二维码宽度
-						codeurl_heigth = 180, //绘制的二维码高度
-						codeurl_x = 70, //绘制的二维码在画布上的位置
-						codeurl_y = 800, //绘制的二维码在画布上的位置
-
 						coverurl_width = 610, //绘制的封面宽度
 						coverurl_heigth = 420, //绘制的封面高度
 						coverurl_x = 40, //绘制的封面在画布上的位置
-						coverurl_y = 290; //绘制的封面在画布上的位置
+						coverurl_y = avatarurl_y + avatarurl_heigth + 150, //绘制的封面在画布上的位置
+
+						codeurl_width = 180, //绘制的二维码宽度
+						codeurl_heigth = 180, //绘制的二维码高度
+						codeurl_x = 40, //绘制的二维码在画布上的位置
+						codeurl_y = coverurl_y + coverurl_heigth + 40; //绘制的二维码在画布上的位置
+
+					// 渐变背景
 					const grd = ctx.createLinearGradient(0, 0, canvasWidthPx, canvasWidthPx)
 					grd.addColorStop(0, option.mainColor)
 					grd.addColorStop(0.8, option.subColor)
 					ctx.fillStyle = grd;
 					ctx.fillRect(0, 0, canvasWidthPx, canvasHeightPx)
-					ctx.save(); // 先保存状态 已便于画完圆再用
 
+
+					// 头像
+					ctx.save(); // 先保存状态 已便于画完圆再用
 					ctx.beginPath(); //开始绘制
 					//先画个圆   前两个参数确定了圆心 （x,y） 坐标  第三个参数是圆的半径  四参数是绘图方向  默认是false，即顺时针
 					ctx.arc(avatarurl_width / 2 + avatarurl_x, avatarurl_heigth / 2 + avatarurl_y,
@@ -64,9 +68,12 @@
 					ctx.drawImage(result[2], avatarurl_x, avatarurl_y, avatarurl_width, avatarurl_heigth); // 推进去图片
 					ctx.restore(); //恢复之前保存的绘图上下文状态 可以继续绘制
 
+					// 作者名称
 					ctx.font = 'normal bold 45px sans-serif';
 					ctx.setFillStyle('#ffffff'); // 文字颜色
 					ctx.fillText(option.displayName, 190, (avatarurl_heigth - 23)); // 绘制文字
+
+					// 文章标题
 					if (option.title) {
 						this.dealWords({
 							ctx: ctx, //画布上下文
@@ -79,6 +86,8 @@
 						});
 					}
 
+					// 文章封面
+					ctx.save()
 					this.handleBorderRect({
 						ctx: ctx, //画布上下文
 						x: coverurl_x,
@@ -88,22 +97,38 @@
 						r: 14
 					})
 					ctx.clip()
-					ctx.drawImage(result[1], coverurl_x, coverurl_y, coverurl_width, coverurl_heigth); // 推进去图片
-					ctx.beginPath();
-					// 设置线宽
-					ctx.lineWidth = 1;
-					// 设置间距（参数为无限数组，虚线的样式会随数组循环）
-					ctx.setLineDash([10, 10]);
-					// 移动画笔至坐标 x20 y20 的位置
-					ctx.moveTo(30, 760);
-					// 绘制到坐标 x20 y100 的位置
-					ctx.lineTo(660, 760);
-					// 填充颜色
-					ctx.strokeStyle = '#ffffff';
-					// 开始填充
-					ctx.stroke();
-					ctx.closePath();
+					ctx.drawImage(result[1], coverurl_x, coverurl_y, coverurl_width, coverurl_heigth);
+					ctx.restore();
 
+					// 分割线
+					this.handleLine({
+						ctx: ctx,
+						x1: 30,
+						y1: 736,
+						x2: 660,
+						y2: 736
+					})
+
+					// 二维码
+					ctx.save()
+					this.handleBorderRect({
+						ctx: ctx, //画布上下文
+						x: codeurl_x,
+						y: codeurl_y,
+						w: codeurl_width,
+						h: codeurl_heigth,
+						r: 14
+					})
+					ctx.clip()
+					ctx.drawImage(result[0], codeurl_x, codeurl_y, codeurl_width, codeurl_heigth);
+					ctx.restore();
+					// 二维码左边的字
+					ctx.save()
+					ctx.font = 'normal bold 35px sans-serif';
+					ctx.setFillStyle('#ffffff'); // 文字颜色
+					ctx.fillText('长 按 识 别 小 程 序 码', 285, codeurl_y + 80); // 绘制文字
+					ctx.fillText('查 看 文 章 详 情 信 息', 285, codeurl_y + 125); // 绘制文字
+					ctx.restore();
 					ctx.draw(false, () => {
 						// canvas画布转成图片并返回图片地址
 						uni.canvasToTempFilePath({
@@ -134,6 +159,28 @@
 						);
 					});
 				})
+			},
+			handleLine({
+				ctx,
+				x1,
+				y1,
+				x2,
+				y2
+			}) {
+				ctx.beginPath();
+				// 设置线宽
+				ctx.lineWidth = 1;
+				// 设置间距（参数为无限数组，虚线的样式会随数组循环）
+				ctx.setLineDash([10, 10]);
+				// 移动画笔至坐标 x20 y20 的位置
+				ctx.moveTo(x1, y1);
+				// 绘制到坐标 x20 y100 的位置
+				ctx.lineTo(x2, y2);
+				// 填充颜色
+				ctx.strokeStyle = '#ffffff';
+				// 开始填充
+				ctx.stroke();
+				ctx.closePath();
 			},
 			//获取图片信息
 			downloadFileImg(url) {
