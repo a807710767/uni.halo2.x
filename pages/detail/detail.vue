@@ -58,6 +58,7 @@
 	import LoadingView from '@/components/Loading/Loading.vue'
 	import RotatingMenu from '@/components/RotatingMenu/RotatingMenu.vue'
 	import Poster from '@/components/Poster/Poster.vue'
+	import richText from '@/lib/richText.js'
 	export default {
 		components: {
 			LoadingView,
@@ -141,6 +142,7 @@
 					name: this.name
 				}).then(res => {
 					console.log(res)
+					res.content.content = richText.format(res.content.content)
 					this.data = res
 					this.$refs.posterRef.drag()
 				}).catch(err => {
@@ -193,11 +195,6 @@
 			background-color: #fff;
 			padding: 20rpx;
 			border-radius: 5px;
-		}
-
-		.language-html {
-			color: red;
-			font-size: 32rpx
 		}
 	}
 </style>
