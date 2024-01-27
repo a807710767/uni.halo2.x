@@ -59,6 +59,9 @@
 	import RotatingMenu from '@/components/RotatingMenu/RotatingMenu.vue'
 	import Poster from '@/components/Poster/Poster.vue'
 	import richText from '@/lib/richText.js'
+	import {
+		resolveComponent
+	} from "vue"
 	export default {
 		components: {
 			LoadingView,
@@ -122,7 +125,17 @@
 			handleMenuClick(item) {
 				console.log(item)
 				if (item.id === '1') {
-
+					this.$refs.posterRef.drag({
+						qrCodeUrl,
+						cover: this.data.spec.cover,
+						title: this.data.spec.title,
+						headImg: this.$halo.info.logo,
+						displayName: this.data.owner.displayName,
+						categories: this.data.categories,
+						tags: this.data.tags,
+						mainColor: this.$halo.info.mainColor,
+						subColor: this.$halo.info.subColor
+					})
 				} else if (item.id === '2') {
 					uni.setClipboardData({
 						data: this.$halo.info.domain + this.data.status.permalink,
@@ -140,13 +153,17 @@
 				this.$refs.LoadingView.open()
 				api.details({
 					name: this.name
-				}).then(res => {
+				}).then(async res => {
 					console.log(res)
 					res.content.content = richText.format(res.content.content)
 					this.data = res
-					this.$refs.posterRef.drag()
+					const qrcode = await api.getQrCode({
+						path: `/pages/detail/detail?name=${this.name}`
+					})
+					const qrCodeUrl = await this.base64ToTempFilePath(qrcode)
+					console.log(qrCodeUrl)
 				}).catch(err => {
-					console.log(res)
+					console.log(err)
 					uni.showModal({
 						title: '错误',
 						content: '获取文章数据异常',
@@ -159,7 +176,26 @@
 					this.$refs.LoadingView.close()
 					uni.stopPullDownRefresh()
 				})
-			}
+			},
+			base64ToTempFilePath(base64Data) {
+				return new Promise((resolve, reject) => {
+					const fs = uni.getFileSystemManager()
+					const fileName = 'temp-image-' + Date.now() // 自定义文件名，可根据需要修改
+					const filePath = uni.env.USER_DATA_PATH + '/' + fileName
+					// const buffer = uni.base64ToArrayBuffer(base64Data)
+					fs.writeFile({
+						filePath,
+						data: base64Data,
+						encoding: 'base64',
+						success() {
+							resolve(filePath)
+						},
+						fail(err) {
+							reject(err)
+						}
+					})
+				})
+			},
 		}
 	}
 </script>

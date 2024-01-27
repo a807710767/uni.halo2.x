@@ -113,4 +113,12 @@ export default {
 			params
 		});
 	},
+	getQrCode(params) {
+		return fetch({
+			url: `/wechat/apis/wx/getQrCode`,
+			method: 'get',
+			responseType: 'arraybuffer',
+			params
+		});
+	},
 }

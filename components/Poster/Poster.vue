@@ -15,19 +15,19 @@
 			};
 		},
 		methods: {
-			drag() {
-				const option = {
-					codeUrl: 'http://cdnpan.qiwo75.com/halo/2024-01-22T11:14:58.875059546-gwajsiif.png', // 二维码
-					cover: 'http://cdnpan.qiwo75.com/halo/2024-01-22T11:14:58.875059546-gwajsiif.png', // 主封面图
-					headImg: this.$halo.info.logo, // headImg
-					title: '一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现',
-					displayName: '栖卧',
-					categories: ['运维', '服务器'],
-					tags: ['linux', 'halo'],
-					mainColor: this.$halo.info.mainColor,
-					subColor: this.$halo.info.subColor
-				}
-				let qrCode = this.downloadFileImg(option.codeUrl);
+			drag(option) {
+				// const option = {
+				// 	qrCodeUrl: 'http://cdnpan.qiwo75.com/halo/2024-01-22T11:14:58.875059546-gwajsiif.png', // 二维码
+				// 	cover: 'http://cdnpan.qiwo75.com/halo/2024-01-22T11:14:58.875059546-gwajsiif.png', // 主封面图
+				// 	headImg: this.$halo.info.logo, // headImg
+				// 	title: '一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现',
+				// 	displayName: '栖卧',
+				// 	categories: ['运维', '服务器'],
+				// 	tags: ['linux', 'halo'],
+				// 	mainColor: this.$halo.info.mainColor,
+				// 	subColor: this.$halo.info.subColor
+				// }
+				let qrCode = this.downloadFileImg(option.qrCodeUrl);
 				let cover = this.downloadFileImg(option.cover);
 				let headImg = this.downloadFileImg(option.headImg);
 				Promise.all([qrCode, cover, headImg]).then(result => {
