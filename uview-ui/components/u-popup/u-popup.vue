@@ -189,6 +189,10 @@ export default {
 				return {}
 			}
 		},
+		backgroundColor:{
+			type: String,
+			default: '#fff'
+		},
 		// 遮罩打开或收起的动画过渡时间，单位ms
 		duration: {
 			type: [String, Number],
@@ -253,6 +257,7 @@ export default {
 			style.height = this.height ? this.getUnitValue(this.height) : 'auto';
 			style.zIndex = this.uZindex;
 			style.marginTop = `-${this.$u.addUnit(this.negativeTop)}`;
+			style.backgroundColor = this.backgroundColor
 			if (this.borderRadius) {
 				style.borderRadius = `${this.borderRadius}rpx`;
 				// 不加可能圆角无效

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<canvas canvas-id="myCanvas" style="width: 690px;height:1040px; position: fixed;top: -11000px;"></canvas>
+		<canvas canvas-id="myCanvas" style="width: 690px;height:900px; position: fixed;top: -11000px;"></canvas>
 	</view>
 </template>
 
@@ -16,149 +16,154 @@
 		},
 		methods: {
 			drag(option) {
-				// const option = {
-				// 	qrCodeUrl: 'http://cdnpan.qiwo75.com/halo/2024-01-22T11:14:58.875059546-gwajsiif.png', // 二维码
-				// 	cover: 'http://cdnpan.qiwo75.com/halo/2024-01-22T11:14:58.875059546-gwajsiif.png', // 主封面图
-				// 	headImg: this.$halo.info.logo, // headImg
-				// 	title: '一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现一套代码多个仓库实现',
-				// 	displayName: '栖卧',
-				// 	categories: ['运维', '服务器'],
-				// 	tags: ['linux', 'halo'],
-				// 	mainColor: this.$halo.info.mainColor,
-				// 	subColor: this.$halo.info.subColor
-				// }
-				let qrCode = this.downloadFileImg(option.qrCodeUrl);
-				let cover = this.downloadFileImg(option.cover);
-				let headImg = this.downloadFileImg(option.headImg);
-				Promise.all([qrCode, cover, headImg]).then(result => {
-					console.log(option)
-					const ctx = uni.createCanvasContext('myCanvas', this);
-					let canvasWidthPx = 690 * this.ratio,
-						canvasHeightPx = 1040 * this.ratio,
-						avatarurl_width = 120, //绘制的头像宽度
-						avatarurl_heigth = 120, //绘制的头像高度
-						avatarurl_x = 40, //绘制的头像在画布上的位置
-						avatarurl_y = 28, //绘制的头像在画布上的位置
+				return new Promise((resolve, reject) => {
+					let qrCode = this.downloadFileImg(option.qrCodeUrl);
+					let cover = this.downloadFileImg(option.cover);
+					let headImg = this.downloadFileImg(option.headImg);
+					Promise.all([qrCode, cover, headImg]).then(result => {
+						console.log(option)
+						const ctx = uni.createCanvasContext('myCanvas', this);
+						let canvasWidthPx = 690 * this.ratio,
+							canvasHeightPx = 900 * this.ratio,
+							paddingLeft = 40,
 
-						coverurl_width = 610, //绘制的封面宽度
-						coverurl_heigth = 420, //绘制的封面高度
-						coverurl_x = 40, //绘制的封面在画布上的位置
-						coverurl_y = avatarurl_y + avatarurl_heigth + 150, //绘制的封面在画布上的位置
+							// 头像参数
+							avatarUrlWidth = 90,
+							avatarUrlHeigth = 90,
+							avatarUrlY = 28,
+							// 名字参数
+							nameSize = 44,
+							nameX = paddingLeft + avatarUrlWidth + 20,
+							nameY = avatarUrlY + (avatarUrlHeigth / 2) + (nameSize / 2) - 5,
 
-						codeurl_width = 180, //绘制的二维码宽度
-						codeurl_heigth = 180, //绘制的二维码高度
-						codeurl_x = 40, //绘制的二维码在画布上的位置
-						codeurl_y = coverurl_y + coverurl_heigth + 40; //绘制的二维码在画布上的位置
+							lineOneY = avatarUrlY + avatarUrlHeigth + 20,
 
-					// 渐变背景
-					const grd = ctx.createLinearGradient(0, 0, canvasWidthPx, canvasWidthPx)
-					grd.addColorStop(0, option.mainColor)
-					grd.addColorStop(0.8, option.subColor)
-					ctx.fillStyle = grd;
-					ctx.fillRect(0, 0, canvasWidthPx, canvasHeightPx)
+							// 文章封面
+							coverUrlWidth = 610,
+							coverUrlHeigth = 420,
+							coverUrlY = lineOneY + 20,
+							// 文章标题
+							titleSize = 40,
+							titleY = coverUrlY + coverUrlHeigth + 10,
+
+							lineTwoY = titleSize * 2 + titleY + 20,
+
+							codeUrlWidth = 180,
+							codeUrlHeigth = 180,
+							codeUrlY = lineTwoY + 20;
+
+						// 渐变背景
+						const grd = ctx.createLinearGradient(0, 0, canvasWidthPx, canvasWidthPx)
+						grd.addColorStop(0, option.mainColor)
+						grd.addColorStop(0.8, option.subColor)
+						ctx.fillStyle = grd;
+						ctx.fillRect(0, 0, canvasWidthPx, canvasHeightPx)
 
 
-					// 头像
-					ctx.save(); // 先保存状态 已便于画完圆再用
-					ctx.beginPath(); //开始绘制
-					//先画个圆   前两个参数确定了圆心 （x,y） 坐标  第三个参数是圆的半径  四参数是绘图方向  默认是false，即顺时针
-					ctx.arc(avatarurl_width / 2 + avatarurl_x, avatarurl_heigth / 2 + avatarurl_y,
-						avatarurl_width / 2, 0, Math.PI * 2, false);
-					ctx.clip(); //画了圆 再剪切  原始画布中剪切任意形状和尺寸。一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内
-					ctx.drawImage(result[2], avatarurl_x, avatarurl_y, avatarurl_width, avatarurl_heigth); // 推进去图片
-					ctx.restore(); //恢复之前保存的绘图上下文状态 可以继续绘制
+						// 头像
+						ctx.save(); // 先保存状态 已便于画完圆再用
+						ctx.beginPath(); //开始绘制
+						//先画个圆   前两个参数确定了圆心 （x,y） 坐标  第三个参数是圆的半径  四参数是绘图方向  默认是false，即顺时针
+						ctx.arc(avatarUrlWidth / 2 + paddingLeft, avatarUrlHeigth / 2 + avatarUrlY,
+							avatarUrlWidth / 2, 0, Math.PI * 2, false);
+						ctx.clip(); //画了圆 再剪切  原始画布中剪切任意形状和尺寸。一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内
+						ctx.drawImage(result[2], paddingLeft, avatarUrlY, avatarUrlWidth,
+							avatarUrlHeigth); // 推进去图片
+						ctx.restore(); //恢复之前保存的绘图上下文状态 可以继续绘制
 
-					// 作者名称
-					ctx.font = 'normal bold 45px sans-serif';
-					ctx.setFillStyle('#ffffff'); // 文字颜色
-					ctx.fillText(option.displayName, 190, (avatarurl_heigth - 23)); // 绘制文字
+						// 作者名称
+						ctx.font = `normal bold ${nameSize}px sans-serif`;
+						ctx.setFillStyle('#ffffff'); // 文字颜色
+						ctx.fillText(option.displayName, nameX, nameY); // 绘制文字
 
-					// 文章标题
-					if (option.title) {
+						// 分割线
+						this.handleLine({
+							ctx: ctx,
+							x1: 30,
+							y1: lineOneY,
+							x2: 660,
+							y2: lineOneY
+						})
+
+						// 文章封面
+						ctx.save()
+						this.handleBorderRect({
+							ctx: ctx, //画布上下文
+							x: paddingLeft,
+							y: coverUrlY,
+							w: coverUrlWidth,
+							h: coverUrlHeigth,
+							r: 14
+						})
+						ctx.clip()
+						ctx.drawImage(result[1], paddingLeft, coverUrlY, coverUrlWidth, coverUrlHeigth);
+						ctx.restore();
+
+
+						// 文章标题
 						this.dealWords({
 							ctx: ctx, //画布上下文
-							fontSize: 30, //字体大小
+							fontSize: titleSize, //字体大小
 							word: option.title, //需要处理的文字
 							maxWidth: 610, //一行文字最大宽度
-							x: 40, //文字在x轴要显示的位置
-							y: 180, //文字在y轴要显示的位置
+							x: paddingLeft, //文字在x轴要显示的位置
+							y: titleY, //文字在y轴要显示的位置
 							maxLine: 2 //文字最多显示的行数
 						});
-					}
+						// 分割线
+						this.handleLine({
+							ctx: ctx,
+							x1: 30,
+							y1: lineTwoY,
+							x2: 660,
+							y2: lineTwoY
+						})
 
-					// 文章封面
-					ctx.save()
-					this.handleBorderRect({
-						ctx: ctx, //画布上下文
-						x: coverurl_x,
-						y: coverurl_y,
-						w: coverurl_width,
-						h: coverurl_heigth,
-						r: 14
-					})
-					ctx.clip()
-					ctx.drawImage(result[1], coverurl_x, coverurl_y, coverurl_width, coverurl_heigth);
-					ctx.restore();
-
-					// 分割线
-					this.handleLine({
-						ctx: ctx,
-						x1: 30,
-						y1: 736,
-						x2: 660,
-						y2: 736
-					})
-
-					// 二维码
-					ctx.save()
-					this.handleBorderRect({
-						ctx: ctx, //画布上下文
-						x: codeurl_x,
-						y: codeurl_y,
-						w: codeurl_width,
-						h: codeurl_heigth,
-						r: 14
-					})
-					ctx.clip()
-					ctx.drawImage(result[0], codeurl_x, codeurl_y, codeurl_width, codeurl_heigth);
-					ctx.restore();
-					// 二维码左边的字
-					ctx.save()
-					ctx.font = 'normal bold 35px sans-serif';
-					ctx.setFillStyle('#ffffff'); // 文字颜色
-					ctx.fillText('长 按 识 别 小 程 序 码', 285, codeurl_y + 80); // 绘制文字
-					ctx.fillText('查 看 文 章 详 情 信 息', 285, codeurl_y + 125); // 绘制文字
-					ctx.restore();
-					ctx.draw(false, () => {
-						// canvas画布转成图片并返回图片地址
-						uni.canvasToTempFilePath({
-								canvasId: 'myCanvas',
-								width: 690,
-								height: 1040,
-								destWidth: 690,
-								destHeight: 1040,
-								success: res => {
-									this.canvasToTempFilePath = res.tempFilePath;
-									console.log(this.canvasToTempFilePath)
-									this.showShareImg = true;
-									uni.showToast({
-										title: '绘制成功'
-									});
+						// 二维码
+						ctx.save()
+						this.handleBorderRect({
+							ctx: ctx, //画布上下文
+							x: paddingLeft,
+							y: codeUrlY,
+							w: codeUrlWidth,
+							h: codeUrlHeigth,
+							r: 14
+						})
+						ctx.clip()
+						ctx.drawImage(result[0], paddingLeft, codeUrlY, codeUrlWidth, codeUrlHeigth);
+						ctx.restore();
+						// 二维码左边的字
+						ctx.save()
+						ctx.font = 'normal bold 35px sans-serif';
+						ctx.setFillStyle('#ffffff'); // 文字颜色
+						ctx.fillText('长 按 识 别 小 程 序 码', 285, codeUrlY + 80); // 绘制文字
+						ctx.fillText('查 看 文 章 详 情 信 息', 285, codeUrlY + 125); // 绘制文字
+						ctx.restore();
+						ctx.draw(false, () => {
+							// canvas画布转成图片并返回图片地址
+							uni.canvasToTempFilePath({
+									canvasId: 'myCanvas',
+									width: canvasWidthPx,
+									height: canvasHeightPx,
+									destWidth: canvasWidthPx,
+									destHeight: canvasHeightPx,
+									success: res => {
+										this.canvasToTempFilePath = res.tempFilePath;
+										console.log(this.canvasToTempFilePath)
+										this.showShareImg = true;
+										console.log(this.showShareImg)
+										resolve(this.canvasToTempFilePath)
+									},
+									fail: err => {
+										reject(eer)
+									}
 								},
-								fail: err => {
-									uni.showToast({
-										title: '绘制失败'
-									});
-								},
-								complete: () => {
-									uni.hideLoading();
-									uni.hideToast();
-								}
-							},
-							this
-						);
-					});
+								this
+							);
+						});
+					})
 				})
+
 			},
 			handleLine({
 				ctx,
@@ -255,9 +260,9 @@
 								if (j === options.maxLine - 1) {
 									//如果是最后一行
 									options.ctx.fillText(nowStr.slice(0, m - 1) + '...', options.x, options.y + (j + 1) *
-										40); //(j+1)*18这是每一行的高度
+										options.fontSize); //(j+1)*18这是每一行的高度
 								} else {
-									options.ctx.fillText(nowStr.slice(0, m), options.x, options.y + (j + 1) * 40);
+									options.ctx.fillText(nowStr.slice(0, m), options.x, options.y + (j + 1) * options.fontSize);
 								}
 								endPos += m; //下次截断点
 								break;
@@ -265,7 +270,7 @@
 						}
 					} else {
 						//如果当前的字符串宽度小于最大宽度就直接输出
-						options.ctx.fillText(nowStr.slice(0), options.x, options.y + (j + 1) * 40);
+						options.ctx.fillText(nowStr.slice(0), options.x, options.y + (j + 1) * options.fontSize);
 					}
 				}
 			},

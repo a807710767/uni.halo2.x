@@ -50,6 +50,17 @@
 		<RotatingMenu v-if="data && data.spec" :btnObj="btnObj" :bottom="300" @click="handleMenuClick"></RotatingMenu>
 		<Poster ref="posterRef"></Poster>
 		<u-back-top :scroll-top="scrollTop" :icon-style="iconStyle" :custom-style="customStyle"></u-back-top>
+		<u-popup v-model="showShareImg" mode="center" closeable backgroundColor="transparent" close-icon-color="#fff"
+			close-icon-size="40">
+			<u-image :src="canvasToTempFilePath" width="552" height="720" border-radius="20"></u-image>
+			<view class="image-tips mt10">
+				可长按保存 / 分享给好友
+			</view>
+			<view class="x juc-bet ali-cen mt10">
+				<u-button size="medium" plain type="success" @click="handleSaveImage">保存图片</u-button>
+				<u-button size="medium" plain type="info" @click="showShareImg = false">关闭弹窗</u-button>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -59,9 +70,6 @@
 	import RotatingMenu from '@/components/RotatingMenu/RotatingMenu.vue'
 	import Poster from '@/components/Poster/Poster.vue'
 	import richText from '@/lib/richText.js'
-	import {
-		resolveComponent
-	} from "vue"
 	export default {
 		components: {
 			LoadingView,
@@ -71,6 +79,7 @@
 		data() {
 			return {
 				name: '',
+				qrCodeUrl: '',
 				scrollTop: 0,
 				data: {},
 				iconStyle: {
@@ -92,7 +101,9 @@
 						id: '2',
 						name: '链接'
 					}]
-				}
+				},
+				canvasToTempFilePath: '',
+				showShareImg: false
 			}
 		},
 		onPageScroll(e) {
@@ -122,20 +133,54 @@
 			this.getDetail()
 		},
 		methods: {
-			handleMenuClick(item) {
+			handleSaveImage() {
+				uni.saveImageToPhotosAlbum({
+					filePath: this.canvasToTempFilePath,
+					success: function(res2) {
+						uni.showToast({
+							title: '保存成功',
+							icon: "none",
+							duration: 5000
+						})
+						this.showShareImg = false
+					},
+					fail: function(err) {
+						console.log(err);
+					}
+				})
+			},
+			async handleMenuClick(item) {
 				console.log(item)
 				if (item.id === '1') {
-					this.$refs.posterRef.drag({
-						qrCodeUrl,
+					// 已经获取到图片就不需要再获取了
+					if (this.canvasToTempFilePath) {
+						this.showShareImg = true
+						return
+					}
+
+					uni.showLoading({
+						title: '加载中',
+						mask: true
+					})
+					const qrcode = await api.getQrCode({
+						path: `/pages/detail/detail?name=${this.name}`
+					})
+					this.qrCodeUrl = await this.base64ToTempFilePath(qrcode)
+					console.log(this.qrCodeUrl)
+					this.canvasToTempFilePath = await this.$refs.posterRef.drag({
+						qrCodeUrl: this.qrCodeUrl || this.$halo.info.avatar,
 						cover: this.data.spec.cover,
 						title: this.data.spec.title,
-						headImg: this.$halo.info.logo,
+						headImg: this.$halo.info.avatar,
 						displayName: this.data.owner.displayName,
 						categories: this.data.categories,
 						tags: this.data.tags,
 						mainColor: this.$halo.info.mainColor,
 						subColor: this.$halo.info.subColor
 					})
+					console.log(this.canvasToTempFilePath);
+					this.showShareImg = true
+					uni.hideLoading()
 				} else if (item.id === '2') {
 					uni.setClipboardData({
 						data: this.$halo.info.domain + this.data.status.permalink,
@@ -157,11 +202,6 @@
 					console.log(res)
 					res.content.content = richText.format(res.content.content)
 					this.data = res
-					const qrcode = await api.getQrCode({
-						path: `/pages/detail/detail?name=${this.name}`
-					})
-					const qrCodeUrl = await this.base64ToTempFilePath(qrcode)
-					console.log(qrCodeUrl)
 				}).catch(err => {
 					console.log(err)
 					uni.showModal({
@@ -231,6 +271,13 @@
 			background-color: #fff;
 			padding: 20rpx;
 			border-radius: 5px;
+		}
+
+		.image-tips {
+			color: #fff;
+			text-align: center;
+			font-size: 40rpx;
+			font-weight: bold;
 		}
 	}
 </style>
