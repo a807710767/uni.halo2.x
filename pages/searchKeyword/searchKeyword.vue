@@ -2,9 +2,9 @@
 	<view class="search-list">
 		<u-navbar placeholder :border-bottom="false" :background="{background:$halo.info.mainColor}"
 			:title-color="$halo.info.mainTextColor" :back-icon-color="$halo.info.mainTextColor">
-			<view>
+			<view style="width: 95%;">
 				<u-search v-model="keyword" maxlength="15" :show-action="false" disabled
-					@click="handleSearch"></u-search>
+					@click="handleSearch" style="width: 100%;"></u-search>
 			</view>
 		</u-navbar>
 		<block v-if="list && list.length">

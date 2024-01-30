@@ -1,6 +1,6 @@
 <template>
 	<view class="index-view">
-		<u-navbar title="首页" placeholder :is-back="false" :border-bottom="false"
+		<u-navbar :title="$halo.info.title" placeholder :is-back="false" :border-bottom="false"
 			:background="{background:$halo.info.mainColor}" :title-color="$halo.info.mainTextColor">
 		</u-navbar>
 		<scroll-view :style="'height: calc(100% - 44px - '+ $u.sys().statusBarHeight+'px);'" scroll-y
@@ -8,7 +8,7 @@
 			@scrolltolower="handleBottom" :refresher-threshold="50" enable-flex :scroll-into-view="scrollId"
 			scroll-with-animation v-if="index === 'index'" @scroll="scrollView">
 			<view class="body">
-				<view class="x ali-cen p10" id="top"
+				<!-- <view class="x ali-cen p10" id="top"
 					:style="'background-color: '+$halo.info.mainColor+';color: ' + $halo.info.mainTextColor">
 					<u-image :src="$halo.info.logo" width="50rpx" height="50rpx" shape="circle"></u-image>
 					<view class="title">
@@ -20,7 +20,7 @@
 					<view class="sub-title" v-if="$halo.info.subTitle">
 						{{ $halo.info.subTitle }}
 					</view>
-				</view>
+				</view> -->
 				<view class="y m10 ">
 					<u-search disabled @click="handleGoSearch" @custom="handleGoSearch" class="p10"></u-search>
 					<view class="x">
