@@ -7,7 +7,7 @@
 			:refresher-triggered="triggered" @refresherrefresh="handleRefresh" refresher-enabled
 			@scrolltolower="handleBottom" :refresher-threshold="50" enable-flex :scroll-into-view="scrollId"
 			scroll-with-animation v-if="index === 'index'" @scroll="scrollView">
-			<view class="body">
+			<view class="body" id="top">
 				<!-- <view class="x ali-cen p10" id="top"
 					:style="'background-color: '+$halo.info.mainColor+';color: ' + $halo.info.mainTextColor">
 					<u-image :src="$halo.info.logo" width="50rpx" height="50rpx" shape="circle"></u-image>
@@ -118,6 +118,9 @@
 			</view>
 		</scroll-view>
 		<LoadingView ref="LoadingView"></LoadingView>
+		<!-- #ifdef MP -->
+		<TipsTop></TipsTop>
+		<!-- #endif -->
 		<view class="back-top" v-show="showBackTop" @click="handleBackTop">
 			<image src="/static/imgs/toTop.gif" class="image"></image>
 		</view>
@@ -127,12 +130,14 @@
 <script>
 	import LoadingView from '@/components/Loading/Loading.vue'
 	import ArticleItem from '@/components/ArticleItem/ArticleItem.vue'
+	import TipsTop from '@/components/TipsTop/TipsTop.vue'
 	import api from '@/api/index.js'
 	export default {
 		name: "IndexView",
 		components: {
 			LoadingView,
-			ArticleItem
+			ArticleItem,
+			TipsTop
 		},
 		props: {
 			index: {
