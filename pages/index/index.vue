@@ -6,8 +6,8 @@
 			<LinksView v-show="index === 2" index="links" ref="links"></LinksView>
 			<MyView v-show="index === 3" index="my" ref="my"></MyView>
 		</view>
-		<u-tabbar v-model="index" :list="list" @change="changeTab" :bg-color="$halo.info.mainColor"
-			:active-color="$halo.info.mainTextColor" :inactive-color="$halo.info.mainTextColor" :border-top="false">
+		<u-tabbar v-model="index" :list="list" @change="changeTab" style="filter: drop-shadow(0px 0px 3rpx #2979FF);"
+			:active-color="$halo.info.mainColor" bg-color="#fff" :border-top="false">
 		</u-tabbar>
 	</view>
 </template>
@@ -26,22 +26,22 @@
 					iconPath: 'home',
 					selectedIconPath: "home",
 					text: '首页',
-					name:'index'
+					name: 'index'
 				}, {
 					iconPath: 'moments',
 					selectedIconPath: "moments",
 					text: '朋友圈',
-					name:'moments'
+					name: 'moments'
 				}, {
 					iconPath: 'attach',
 					selectedIconPath: "attach",
 					text: '友链',
-					name:'links'
+					name: 'links'
 				}, {
 					iconPath: 'account-fill',
 					selectedIconPath: "account-fill",
 					text: '我的',
-					name:'my'
+					name: 'my'
 				}]
 			};
 		},

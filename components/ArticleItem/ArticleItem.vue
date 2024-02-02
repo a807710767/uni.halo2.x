@@ -10,10 +10,12 @@
 					{{data.excerpt}}
 				</view>
 				<view class="x mt10" style="flex-wrap: wrap;">
-					<u-tag v-for="(item,index) in data.categories" :key="index" :text="$halo.categoriesMap[item]"
-						plainFill plain size="mini" class="m10" style="flex-shrink: 0;"></u-tag>
-					<u-tag v-for="(item,index) in data.tags" :key="index" :text="$halo.tagsMap[item]" icon="tags-fill"
-						plainFill plain size="mini" type="warning" class="m10" style="flex-shrink: 0;"></u-tag>
+					<u-tag v-for="(item,index) in data.categories" :key="'categories'+index"
+						:text="$halo.categoriesMap[item]" plainFill plain size="mini" class="m10"
+						style="flex-shrink: 0;"></u-tag>
+					<u-tag v-for="(item,index) in data.tags" :key="'tags-'+index" :text="$halo.tagsMap[item]"
+						icon="tags-fill" plainFill plain size="mini" type="warning" class="m10"
+						style="flex-shrink: 0;"></u-tag>
 				</view>
 				<view class="x juc-bet bottom mt10">
 					<view class="x">
@@ -28,9 +30,8 @@
 				</view>
 			</view>
 		</view>
-		<view class="x" v-if="layoutComp === 'row'">
-			<u-image :src="data.cover || $halo.info.logo" width="230rpx" height="100%" class="cover-row"
-				:loadingIcon="$halo.info.logo"></u-image>
+		<view class="x row" v-if="layoutComp === 'row'">
+			<image :src="data.cover || $halo.info.logo" mode="aspectFill" class="cover-row"></image>
 			<view class="y juc-bet">
 				<view class="y">
 					<view class="title u-line-2">
@@ -41,10 +42,12 @@
 					</view>
 				</view>
 				<view class="x mt10" style="flex-wrap: wrap;">
-					<u-tag v-for="(item,index) in data.categories" :key="index" :text="$halo.categoriesMap[item]"
-						plainFill plain size="mini" class="m10" style="flex-shrink: 0;"></u-tag>
-					<u-tag v-for="(item,index) in data.tags" :key="index" :text="$halo.tagsMap[item]" icon="tags-fill"
-						plainFill plain size="mini" type="warning" class="m10" style="flex-shrink: 0;"></u-tag>
+					<u-tag v-for="(item,index) in data.categories" :key="'categories-'+index"
+						:text="$halo.categoriesMap[item]" plainFill plain size="mini" class="m10"
+						style="flex-shrink: 0;"></u-tag>
+					<u-tag v-for="(item,index) in data.tags" :key="'tags-'+index" :text="$halo.tagsMap[item]"
+						icon="tags-fill" plainFill plain size="mini" type="warning" class="m10"
+						style="flex-shrink: 0;"></u-tag>
 				</view>
 				<view class="x">
 					<u-icon name="eye-fill" :label="data.visit"></u-icon>
@@ -129,8 +132,13 @@
 			font-size: 28rpx;
 		}
 
+		.row {
+			height: 300rpx;
+		}
 
 		.cover-row {
+			width: 230rpx;
+			height: 100%;
 			flex-shrink: 0;
 			margin-right: 20rpx;
 		}
