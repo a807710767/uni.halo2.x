@@ -8,7 +8,7 @@ const info = {
 	mainColor: '#2979FF',
 	subColor: '#643dff',
 	mainTextColor: '#fff',
-	layout: 'row',
+	layout: 'col',
 	beian: '琼ICP备19001419号-2'
 }
 const otherPlatforms = [{
