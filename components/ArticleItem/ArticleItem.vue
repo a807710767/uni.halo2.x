@@ -10,10 +10,10 @@
 					{{data.excerpt}}
 				</view>
 				<view class="x mt10" style="flex-wrap: wrap;">
-					<u-tag v-for="(item,index) in data.categories" :key="'categories'+index"
+					<u-tag v-for="(item,index) in data.categories" :key="index"
 						:text="$halo.categoriesMap[item]" plainFill plain size="mini" class="m10"
 						style="flex-shrink: 0;"></u-tag>
-					<u-tag v-for="(item,index) in data.tags" :key="'tags-'+index" :text="$halo.tagsMap[item]"
+					<u-tag v-for="(item,index) in data.tags" :key="index" :text="$halo.tagsMap[item]"
 						icon="tags-fill" plainFill plain size="mini" type="warning" class="m10"
 						style="flex-shrink: 0;"></u-tag>
 				</view>
@@ -44,10 +44,10 @@
 				</view>
 				<view class="y">
 					<view class="x mt10" style="flex-wrap: wrap;">
-						<u-tag v-for="(item,index) in data.categories" :key="'categories-'+index"
+						<u-tag v-for="(item,index) in data.categories" :key="index"
 							:text="$halo.categoriesMap[item]" plainFill plain size="mini" class="mr10 mt10"
 							style="flex-shrink: 0;"></u-tag>
-						<u-tag v-for="(item,index) in data.tags" :key="'tags-'+index" :text="$halo.tagsMap[item]"
+						<u-tag v-for="(item,index) in data.tags" :key="index" :text="$halo.tagsMap[item]"
 							icon="tags-fill" plainFill plain size="mini" type="warning" class="mr10 mt10"
 							style="flex-shrink: 0;"></u-tag>
 					</view>

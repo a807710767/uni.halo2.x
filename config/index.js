@@ -9,12 +9,13 @@ const info = {
 	subColor: '#643dff',
 	mainTextColor: '#fff',
 	layout: 'col',
-	beian: '琼ICP备19001419号-2'
+	beian: '琼ICP备19001419号-2',
+	userToken: 'pat_eyJraWQiOiJ4ZGllNUNaMUFHb2JBZVBCN0pWdW5GOHVDTDJqVE5JX3JUYm5ySkRpQzJNIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjIwNzUiLCJzdWIiOiJxaXdvNzc4IiwiaWF0IjoxNzIwNTEwMDQ1LCJqdGkiOiJjYTY5ZDhlZi02YjY1LTlkNzgtNTc3Zi0zN2I4NTgzZjVlYzYiLCJwYXRfbmFtZSI6InBhdC1xaXdvNzc4LU12cXNFIn0.nXeEb2v6xrsjwrIGf5eX3KRxcLOyWhLPoZdyquL2K0kr6ompTarmQUpISoyR2ArwcZyd7_fZJ2MxtMhtg2M3GhWumC94wNjfOzN6L8n2QJMSrE2Ft-8HIH10AM1DS0b0wULf5vqM2cIKUEn2HiD5qT7JYQosVjZCEW5goOxJW5CXHZOaGN04F81yZmFibEPxkorDacEASYRLiIMpnTbJUJRC3VPJrase2C1QpucxIHfV2vHFj0nmP4oLmGXa7kMSkFLZhp15Lk1ABy80YTUPwxxzvbC5l4-mLyzaVEwvHW9vatxcEFDpDailjppxhRc54ItW9_gXDAHS4WMbux2Ux5sVsz4m0uFyXmU0q9sjKlCZc7h9IW0-OeHhsfQlUNKnq-Yufx9tjXCF4b0vy6vpe9CU-mq2LXTQ6AG92XjR0Sp3YgXoXDXL7UrIe1tPfur1ldwjaI09sUd2eSiSr5-b36y7kjKaxVq3ZRXMMIGs0IQsZ-JeOPyWCHaMVoRjK9CV_k3Zkn3_3DM3xvQUJ0IIE4tiBTKhazj4bXh8kqUcF3k8GWkQcWo7p7hHwy820Ie6zlbh4aPjad6iUASpkWfSWUEq6wRS0KE-UYX26q8JktV3Pi_g2B7B8WZelqjkSOCeK_mIGQQupd0xhMu3Hf9MhRjzOJ1NuM1KWWf_gyzZ3m0'
 }
 const otherPlatforms = [{
 	name: 'QQ号',
 	url: '807710767',
-	icon: 'weibo-circle-fill'
+	icon: 'qq-circle-fill'
 }, {
 	name: '微信号',
 	url: 'qiwo778',
@@ -25,10 +26,6 @@ const otherPlatforms = [{
 	icon: 'weibo-circle-fill'
 }, {
 	name: '知乎地址',
-	url: 'https://www.zhihu.com/people/qi-wo-42-89',
-	icon: 'zhihu-circle-fill'
-}, {
-	name: '掘金地址',
 	url: 'https://www.zhihu.com/people/qi-wo-42-89',
 	icon: 'zhihu-circle-fill'
 }]
@@ -47,10 +44,7 @@ const $halo = {
 	tagsMap: {},
 }
 uni.$halo = $halo
-
-import api from '@/api/index.js'
 const install = async (Vue) => {
-
 	Vue.prototype.$halo = $halo
 }
 export default {

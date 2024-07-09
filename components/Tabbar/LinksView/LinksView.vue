@@ -44,6 +44,7 @@
 		},
 		data() {
 			return {
+				isFirst: true,
 				triggered: true,
 				list: {},
 			};
@@ -52,7 +53,7 @@
 			LoadingView
 		},
 		mounted() {
-			this.init()
+			// this.init()
 		},
 		methods: {
 			async init() {
@@ -78,6 +79,10 @@
 				uni.setNavigationBarTitle({
 					title: '友链'
 				})
+				if (this.isFirst) {
+					this.init()
+					this.isFirst = false
+				}
 				console.log('onshow');
 			},
 			handleRefresh() {
@@ -86,7 +91,7 @@
 				this.init()
 			},
 			getLinks() {
-				api.links().then(res => {
+				return api.links().then(res => {
 					console.log('links', res);
 					this.list = {}
 					const map = {}

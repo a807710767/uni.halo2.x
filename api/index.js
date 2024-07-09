@@ -52,7 +52,7 @@ export default {
 	},
 	moments(params) {
 		return fetch({
-			url: `/apis/api.plugin.halo.run/v1alpha1/plugins/PluginMoments/moments`,
+			url: `/apis/moment.halo.run/v1alpha1/moments`,
 			method: 'get',
 			params
 		});

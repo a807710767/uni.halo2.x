@@ -44,6 +44,7 @@
 		},
 		data() {
 			return {
+				isFirst: true,
 				triggered: true,
 				size: 20,
 				page: 1,
@@ -56,7 +57,7 @@
 			Album
 		},
 		mounted() {
-			this.init()
+			// this.init()
 		},
 		methods: {
 			async init() {
@@ -67,6 +68,10 @@
 				uni.setNavigationBarTitle({
 					title: '朋友圈'
 				})
+				if (this.isFirst) {
+					this.init()
+					this.isFirst = false
+				}
 				console.log('onshow');
 			},
 			async getData() {
@@ -81,9 +86,9 @@
 				this.total = res.total
 				const list = res.items.map(item => {
 					return {
-						content: item.moment.spec.content.html,
-						medium: item.moment.spec.content.medium,
-						createTime: this.$u.timeFormat(new Date(item.moment.spec.releaseTime),
+						content: item.spec.content.html,
+						medium: item.spec.content.medium,
+						createTime: this.$u.timeFormat(new Date(item.spec.releaseTime),
 							'yyyy-mm-dd hh:MM:ss')
 					}
 				})

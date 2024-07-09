@@ -146,6 +146,7 @@
 		},
 		data() {
 			return {
+				isFirst: true,
 				tagIndex: 0,
 				swiperList: [],
 				triggered: false,
@@ -173,7 +174,7 @@
 			};
 		},
 		mounted() {
-			this.init()
+			// this.init()
 		},
 		methods: {
 			async init() {
@@ -196,6 +197,10 @@
 				uni.setNavigationBarTitle({
 					title: this.$halo.info.title + ' - ' + this.$halo.info.subTitle
 				})
+				if (this.isFirst) {
+					this.init()
+					this.isFirst = false
+				}
 				// if (this.$refs.tabsRef) {
 				// 	this.$refs.tabsRef.init()
 				// }

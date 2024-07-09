@@ -66,6 +66,7 @@
 		},
 		data() {
 			return {
+				isFirst: true,
 				triggered: true,
 				category: '--',
 				comment: '--',
@@ -121,7 +122,7 @@
 			Typewriter
 		},
 		mounted() {
-			this.getStats()
+			// this.getStats()
 		},
 		methods: {
 			handleClick(item) {
@@ -135,6 +136,10 @@
 				uni.setNavigationBarTitle({
 					title: '我的'
 				})
+				if (this.isFirst) {
+					this.getStats()
+					this.isFirst = false
+				}
 				console.log('onshow');
 			},
 			handleRefresh() {

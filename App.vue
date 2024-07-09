@@ -2,6 +2,7 @@
 	import api from '@/api/index.js'
 	export default {
 		onLaunch: async function() {
+			uni.setStorageSync('userToken', this.$halo.info.userToken)
 			if (Object.keys(this.$halo.categoriesMap).length === 0) {
 				await api.categories().then(res => {
 					res.items.map(item => {
