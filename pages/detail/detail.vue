@@ -7,21 +7,21 @@
 			<view class="title">
 				{{ data.spec.title}}
 			</view>
-			<view class="">
+			<!-- <view class="">
 				作者：{{data.owner.displayName}}
-			</view>
+			</view> -->
 			<view class="">
 				时间 ：{{$u.timeFormat(data.spec.publishTime, 'yyyy-mm-dd hh:MM:ss')}}
 			</view>
-			<view class="x">
+			<!-- <view class="x">
 				<view class="">
 					图片：{{data.spec.htmlMetas[0]['count-images']}}
 				</view>
 				<view class="ml10">
 					字数：{{data.spec.htmlMetas[0]['count-words']}}
 				</view>
-			</view>
-			<u-image :src="data.spec.cover" width="600rpx" height="400rpx" style="margin: 10 auto;"></u-image>
+			</view> -->
+			<u-image :src="data.spec.cover" width="600rpx" height="400rpx" style="margin: 10 auto;" border-radius="10"></u-image>
 		</view>
 		<view class="category-tag" v-if="data && data.spec">
 			<view class="x category" style="flex-wrap: wrap;">
@@ -247,6 +247,7 @@
 
 		.head {
 			margin: 0rpx 20rpx 20rpx;
+			padding: 10rpx;
 			background-color: #fff;
 			border-radius: 5px;
 			text-align: center;
