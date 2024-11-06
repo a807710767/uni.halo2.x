@@ -104,7 +104,6 @@
 			}
 		},
 		async onPullDownRefresh() {
-			uni.startPullDownRefresh();
 			await this.getCategory()
 			const category = this.categories.filter(item => item.metadata === this.name)
 			this.changeSwiper({

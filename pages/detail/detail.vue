@@ -129,7 +129,6 @@
 			}
 		},
 		onPullDownRefresh() {
-			uni.startPullDownRefresh();
 			this.getDetail()
 		},
 		methods: {
