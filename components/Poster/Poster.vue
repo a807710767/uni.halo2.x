@@ -15,11 +15,14 @@
 			};
 		},
 		methods: {
+			replaceHttps(url){
+				return url.indexOf('http:') > -1 ? url.replace(/^http:/, 'https:') : url
+			},
 			drag(option) {
 				return new Promise((resolve, reject) => {
 					let qrCode = this.downloadFileImg(option.qrCodeUrl);
-					let cover = this.downloadFileImg(option.cover);
-					let headImg = this.downloadFileImg(option.headImg);
+					let cover = this.downloadFileImg(this.replaceHttps(option.cover));
+					let headImg = this.downloadFileImg(this.replaceHttps(option.headImg));
 					Promise.all([qrCode, cover, headImg]).then(result => {
 						console.log(option)
 						const ctx = uni.createCanvasContext('myCanvas', this);
