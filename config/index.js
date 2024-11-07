@@ -21,11 +21,11 @@ const otherPlatforms = [{
 }, {
 	name: '微信号',
 	url: 'qiwo778',
-	icon: 'weibo-circle-fill'
+	icon: 'weixin-circle-fill'
 },{
 	name: '小红书',
 	url: '栖卧',
-	icon: 'weibo-circle-fill'
+	icon: '/static/imgs/redbook.png'
 }, {
 	name: '微博地址',
 	url: 'https://m.weibo.cn/u/2449565780',

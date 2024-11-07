@@ -331,7 +331,7 @@
 		/* #endif */
 	}
 
-	/* #ifdef H5 MP-WEIXIN */
+	/* #ifdef H5 || MP-WEIXIN */
 	// 通过样式穿透，隐藏H5下，scroll-view下的滚动条
 	scroll-view ::v-deep ::-webkit-scrollbar {
 		display: none;
