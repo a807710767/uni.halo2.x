@@ -1,12 +1,9 @@
 <template>
 	<view class="index-view">
-		<u-navbar :title="$halo.info.title" placeholder :is-back="false" :border-bottom="false"
-			:background="{background:$halo.info.mainColor}" :title-color="$halo.info.mainTextColor">
+		<u-navbar :title="$halo.info.title" placeholder :is-back="false" :border-bottom="false" :background="{background:$halo.info.mainColor}" :title-color="$halo.info.mainTextColor">
 		</u-navbar>
-		<scroll-view :style="'height: calc(100% - 44px - '+ $u.sys().statusBarHeight+'px);'" scroll-y
-			:refresher-triggered="triggered" @refresherrefresh="handleRefresh" refresher-enabled
-			@scrolltolower="handleBottom" :refresher-threshold="50" enable-flex :scroll-into-view="scrollId"
-			scroll-with-animation v-if="index === 'index'" @scroll="scrollView">
+		<scroll-view :style="'height: calc(100% - 44px - '+ $u.sys().statusBarHeight+'px);'" scroll-y :refresher-triggered="triggered" @refresherrefresh="handleRefresh" refresher-enabled
+			@scrolltolower="handleBottom" :refresher-threshold="50" enable-flex :scroll-into-view="scrollId" scroll-with-animation v-if="index === 'index'" @scroll="scrollView">
 			<view class="body" id="top">
 				<!-- <view class="x ali-cen p10" id="top"
 					:style="'background-color: '+$halo.info.mainColor+';color: ' + $halo.info.mainTextColor">
@@ -34,8 +31,7 @@
 				<!-- 分类 -->
 				<view class="ml10 mr10 p10" v-if="categories && categories.length">
 					<view class="category x" v-if="categories.length <= 10">
-						<view class="y ali-cen m10" v-for="(item, index) in categories" :key="index"
-							@click="handleCategory(item)">
+						<view class="y ali-cen m10" v-for="(item, index) in categories" :key="index" @click="handleCategory(item)">
 							<image :src="item.cover || $halo.info.logo" class="image">
 							</image>
 							<view class="text">
@@ -46,8 +42,7 @@
 					</view>
 					<view class="category y" v-else>
 						<view class="x">
-							<view class="y ali-cen m10" v-for="(item, index) in categoriesTop" :key="index"
-								@click="handleCategory(item)">
+							<view class="y ali-cen m10" v-for="(item, index) in categoriesTop" :key="index" @click="handleCategory(item)">
 								<image :key="index" :src="item.cover || $halo.info.logo" class="image">
 								</image>
 								<view class="text">
@@ -56,8 +51,7 @@
 							</view>
 						</view>
 						<view class="x">
-							<view class="y ali-cen m10" v-for="(item, index) in categoriesBottom" :key="index"
-								@click="handleCategory(item)">
+							<view class="y ali-cen m10" v-for="(item, index) in categoriesBottom" :key="index" @click="handleCategory(item)">
 								<image :key="index" :src="item.cover || $halo.info.logo" class="image">
 								</image>
 								<view class="text">
@@ -70,21 +64,16 @@
 				<!-- tags -->
 				<block v-if="tags && tags.length">
 					<view id="tags" class="tags">
-						<u-tabs ref="tabsRef" :current="tagIndex" :list="tags" name="displayName"
-							@change="handleTags"></u-tabs>
+						<u-tabs ref="tabsRef" :current="tagIndex" :list="tags" name="displayName" @change="handleTags"></u-tabs>
 					</view>
-					<view class="p20"
-						:style="'min-height:calc( '+ articleHeight +'px - 20rpx);width: 100%;box-sizing:border-box'">
+					<view class="p20" :style="'min-height:calc( '+ articleHeight +'px - 20rpx);width: 100%;box-sizing:border-box'" @touchstart="handleTouchStart" @touchend="handleTouchEnd">
 						<block v-if="articleList && articleList.length">
-							<ArticleItem style="width: 100%" v-for="(article,articleIndex) in articleList"
-								:data="article" :key="articleIndex">
+							<ArticleItem style="width: 100%" v-for="(article,articleIndex) in articleList" :data="article" :key="articleIndex">
 							</ArticleItem>
 							<u-loadmore :status="articleList.length >= total ? 'nomore':'loading '" dashed line />
 						</block>
-						<view class="x ali-cen juc-cen"
-							:style="'min-height:calc( '+ articleHeight +'px - 20rpx);width: 100%;'" v-else>
-							<u-empty mode="data" src="https://cdnpan.qiwo75.com/halo/nodata.png" iconSize="200"
-								textSize="30rpx">
+						<view class="x ali-cen juc-cen" :style="'min-height:calc( '+ articleHeight +'px - 20rpx);width: 100%;'" v-else>
+							<u-empty mode="data" src="https://cdnpan.qiwo75.com/halo/nodata.png" iconSize="200" textSize="30rpx">
 							</u-empty>
 						</view>
 						<!-- #ifdef H5 -->
@@ -93,27 +82,6 @@
 						</view>
 						<!-- #endif -->
 					</view>
-					<!-- 高度问题没解决 -->
-					<!-- <swiper :current="tagIndex" @change="handleSwiper"
-					:style="'min-height:calc( '+ articleHeight +'px - 20rpx);width: 100%;'">
-					<swiper-item v-for="(item,index) in tags" :key="index" class="list-swiper-item" style="height: auto;">
-						<view class="y" v-if="index === tagIndex" style="width: 100%;">
-							<block v-if="articleList && articleList.length">
-								<ArticleItem v-for="(article,articleIndex) in articleList" :data="article"
-									:key="articleIndex">
-								</ArticleItem>
-							</block>
-							<block v-else>
-								<u-empty mode="data" iconSize="200" textSize="30" marginTop="100">
-								</u-empty>
-							</block>
-						</view>
-						<view v-else>
-							<u-loading-page :image="$halo.info.logo" iconSize="200" fontSize="30" loadingText="切换看数据"
-								loading></u-loading-page>
-						</view>
-					</swiper-item>
-				</swiper> -->
 				</block>
 			</view>
 		</scroll-view>
@@ -177,6 +145,31 @@
 			// this.init()
 		},
 		methods: {
+			handleTouchStart(e) {
+				this.moveInfo = e.changedTouches[0]
+			},
+			handleTouchEnd(e) {
+				const diffX = this.moveInfo.clientX - e.changedTouches[0].clientX
+				const diffY = this.moveInfo.clientY - e.changedTouches[0].clientY
+				const currentTabIndex = this.tagIndex
+				if (diffY < -100 || diffY > 100) {
+					return
+				}
+				if (diffX < -100) {
+					const index = currentTabIndex - 1 >= 0 ? currentTabIndex - 1 : 0;
+					console.log('index减1', index);
+					if (index != currentTabIndex) {
+						this.handleTags(index)
+					}
+				} else if (diffX > 100) {
+					const length = this.tags.length - 1
+					const index = currentTabIndex + 1 <= length ? currentTabIndex + 1 : length;
+					console.log('index加1', index);
+					if (index != currentTabIndex) {
+						this.handleTags(index)
+					}
+				}
+			},
 			async init() {
 				uni.setNavigationBarTitle({
 					title: this.$halo.info.title + ' - ' + this.$halo.info.subTitle
