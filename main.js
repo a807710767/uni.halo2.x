@@ -3,8 +3,6 @@ import App from './App'
 import uView from "uview-ui";
 Vue.use(uView);
 
-import config from '@/config/index.js'
-Vue.use(config);
 
 Vue.prototype.$uView = {
 	size: 'mini'

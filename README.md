@@ -12,7 +12,8 @@
 - 分类页面swiper性能优化
 
 ## 仓库 
-码云：https://gitee.com/qiwo/uni.halo2.x
+- 码云：[https://gitee.com/qiwo/uni.halo2.x](https://gitee.com/qiwo/uni.halo2.x)
+- github：[https://github.com/a807710767/uni.halo2.x](https://github.com/a807710767/uni.halo2.x)
 
 ## 截图
 <img src="https://cdnpan.qiwo75.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20241107170329.jpg" width="49%" />

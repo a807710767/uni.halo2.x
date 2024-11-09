@@ -7,6 +7,7 @@
 		<u-cell-group>
 			<u-cell-item title="作者博客" :arrow="true" @click="handleClick(1)"></u-cell-item>
 			<u-cell-item title="码云仓库" :arrow="true" @click="handleClick(2)"></u-cell-item>
+			<u-cell-item title="github仓库" :arrow="true" @click="handleClick(5)"></u-cell-item>
 			<u-cell-item title="halo官方" :arrow="true" @click="handleClick(3)"></u-cell-item>
 			<u-cell-item title="halo文档" :arrow="true" @click="handleClick(4)"></u-cell-item>
 		</u-cell-group>
@@ -34,6 +35,9 @@
 				}
 				else if (type === 4) {
 					url: 'https://docs.halo.run/'
+				}
+				else if (type === 5) {
+					url: 'https://github.com/a807710767/uni.halo2.x'
 				}
 				uni.setClipboardData({
 					data: url,

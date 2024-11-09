@@ -50,9 +50,6 @@ const $halo = {
 	tagsMap: {},
 }
 uni.$halo = $halo
-const install = async (Vue) => {
-	Vue.prototype.$halo = $halo
-}
 export default {
-	install
+	$halo
 }
